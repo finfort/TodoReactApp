@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 
 import { addTodo } from '../actions';
 
-import Header from './header';
 
-let Todo = ({todos, dispatch }) => {
+
+let nextTodoId = 0;
+let Todo = ({dispatch }) => {
     let input;
 
     return (
         <div>
-            <Header />
+            
 
             <div>
                 <form onSubmit={e => {
@@ -18,7 +19,12 @@ let Todo = ({todos, dispatch }) => {
                     if (!input.value.trim()) {
                         return
                     }
-                    dispatch(addTodo(input.value))// not dispatch but use connect 
+                    //dispatch(addTodo(input.value))// not dispatch but use connect 
+                    dispatch({
+                        type: 'ADD_TODO',
+                        id: nextTodoId++,
+                        text: input.value
+                    })
                     input.value = ''
                 } }>
                     <input ref={node => {

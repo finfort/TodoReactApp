@@ -7,7 +7,7 @@ import { Router, Route, browserHistory } from 'react-router';
 
 import App from './components/app';
 import Resources from './components/resources';
-import Todo from './components/Todo';
+import TodoComponent from './components/TodoComponent';
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
@@ -17,7 +17,7 @@ ReactDOM.render(
     <Router history={browserHistory} >
       <Route path="/" component={App} />
         <Route path="resources" component={Resources} />
-        <Route path="todo" component={Todo} />
+        <Route path="todo" component={TodoComponent} />
     </Router>
   </Provider>
   , document.querySelector('.container-fluid'));
