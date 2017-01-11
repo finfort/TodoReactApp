@@ -5,6 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Router, Route, browserHistory } from 'react-router';
 import { composeWithDevTools } from 'remote-redux-devtools';
 
+import requireAuth from './components/require_authentication';
 import App from './components/app';
 import Resources from './components/resources';
 import TodoComponent from './components/TodoComponent';
@@ -22,7 +23,7 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware}>
     <Router history={browserHistory} >
       <Route path="/" component={App} />
-      <Route path="resources" component={Resources} />
+      <Route path="resources" component={requireAuth(Resources)} />
       <Route path="todo" component={TodoComponent} />
     </Router>
   </Provider>
