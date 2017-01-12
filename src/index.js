@@ -12,16 +12,16 @@ import TodoComponent from './components/TodoComponent';
 import UserList from './components/user_list';
 import reducers from './reducers';
 
-// const createStoreWithMiddleware = applyMiddleware()(createStore);
-const createStoreWithMiddleware = createStore(reducers, /* preloadedState, */ composeWithDevTools(
-  applyMiddleware(),
-  //applyMiddleware(...middleware),
-  //// other store enhancers if any
-));
+const createStoreWithMiddleware = applyMiddleware()(createStore);
+// const createStoreWithMiddleware = createStore(reducers, /* preloadedState, */ composeWithDevTools(
+//   applyMiddleware(),
+//   //applyMiddleware(...middleware),
+//   //// other store enhancers if any
+// ));
 
 ReactDOM.render(
-  //createStoreWithMiddleware(reducers)
-  <Provider store={createStoreWithMiddleware}>
+  //createStoreWithMiddleware
+  <Provider store={createStoreWithMiddleware(reducers)}>
     <Router history={browserHistory} >
       <Route path="/" component={App} />
       <Route path="resources" component={requireAuth(Resources)} />
@@ -29,4 +29,4 @@ ReactDOM.render(
       <Route path="users" component={UserList} />
     </Router>
   </Provider>
-  , document.querySelector('.container-fluid'));
+  , document.querySelector('.container'));

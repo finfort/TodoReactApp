@@ -9,19 +9,20 @@ class UserList extends Component {
     }
 
     renderUser(user) {
-        console.log('user', user.name);
+        return(
         <div className="card card-block">
             <h4 className="card-title">{user.name}</h4>
             <p className="card-text">user.text</p>
-            <a className="btn btn-primary">website</a>
+            <button className="btn btn-primary">website</button>
         </div>
+        );
     }
 
     render() {
         return (
-            <div>
+            <div >
                 <Header />
-                {this.props.users.map(this.renderUser)}
+                    <div className="user-list">{this.props.users.map(this.renderUser)}</div>
             </div>
         )
     }

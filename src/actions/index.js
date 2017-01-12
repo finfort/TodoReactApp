@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
     CHANGE_AUTH,
     FETCH_USERS
@@ -37,12 +38,9 @@ export const toggleTodo = (id) => {
 
 
 export function fetch_users (){
+  const request = axios.get('https://jsonplaceholder.typicode.com/users');
   return { 
     type: FETCH_USERS,
-    payload: [
-      {name: 'jane'},
-      {name: 'alex'},
-      {name: 'michle'}
-    ]
+    payload: request
   }
 }
