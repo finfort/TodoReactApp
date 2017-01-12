@@ -1,5 +1,6 @@
 import {
-    CHANGE_AUTH
+    CHANGE_AUTH,
+    FETCH_USERS
 } from './types';
 
 export function authenticate(isLoggedIn){
@@ -35,3 +36,13 @@ export const toggleTodo = (id) => {
 }
 
 
+export function fetch_users (){
+  return { 
+    type: FETCH_USERS,
+    payload: [
+      {name: 'jane'},
+      {name: 'alex'},
+      {name: 'michle'}
+    ]
+  }
+}

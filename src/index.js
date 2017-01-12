@@ -9,6 +9,7 @@ import requireAuth from './components/require_authentication';
 import App from './components/app';
 import Resources from './components/resources';
 import TodoComponent from './components/TodoComponent';
+import UserList from './components/user_list';
 import reducers from './reducers';
 
 // const createStoreWithMiddleware = applyMiddleware()(createStore);
@@ -25,6 +26,7 @@ ReactDOM.render(
       <Route path="/" component={App} />
       <Route path="resources" component={requireAuth(Resources)} />
       <Route path="todo" component={TodoComponent} />
+      <Route path="users" component={UserList} />
     </Router>
   </Provider>
   , document.querySelector('.container-fluid'));

@@ -1,1 +1,1 @@
-export const CHANGE_AUTH = '';
+export const CHANGE_AUTH = '', FETCH_USERS = 'fetch_users';
