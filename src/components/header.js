@@ -20,7 +20,7 @@ class Header extends Component {
                       <span className="navbar-toggler-icon"></span>
                   </button>
                 
-                <a className="navbar-brand" href="/">Navbar</a>
+                <Link className="navbar-brand" to="/">Navbar</Link>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item active">
