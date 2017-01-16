@@ -10,9 +10,9 @@ class UserList extends Component {
 
     renderUser(user) {
         return(
-        <div className="card card-block">
+        <div key={user.id} className="card card-block">
             <h4 className="card-title">{user.name}</h4>
-            <p className="card-text">{user.phone}}</p>
+            <p className="card-text">{user.phone}</p>
             <a className="btn btn-primary">{user.website}</a>
         </div>
         );
