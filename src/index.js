@@ -12,7 +12,9 @@ import TodoComponent from './components/TodoComponent';
 import UserList from './components/user_list';
 import reducers from './reducers';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+import Async from './middlewares/async';
+
+const createStoreWithMiddleware = applyMiddleware(Async)(createStore);
 // const createStoreWithMiddleware = createStore(reducers, /* preloadedState, */ composeWithDevTools(
 //   applyMiddleware(),
 //   //applyMiddleware(...middleware),
