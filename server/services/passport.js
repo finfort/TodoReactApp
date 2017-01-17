@@ -12,16 +12,17 @@ const localLogin = new LocalStrategy({ usernameField: 'email' }, function (email
     //verify this email and password, call done with user
     // if it is the correct email and password
     //otherwise, call done with false
-    User.findOne({ email: email }, function (err, res) {
+    User.findOne({ email: email }, function (err, user) {
         if (err) return done(err);
         if (!user) { return done(null, false); }// no user found with this credentials
 
         //compare passwords - is 'password' equal to user.password
-        res.comparePassword(password, function(err, isMatch){
+        user.comparePasswords(password, function(err, isMatch){
             if(err) return done(err);
             if(!isMatch) return done(null, false); // paswords not matched no user provided
 
             return done(null, user); // if matched return user;
+            // done give us req.user in signin.post route
         });
     });
 
