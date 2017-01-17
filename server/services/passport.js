@@ -21,7 +21,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
     // otherwise, call done without a user object
     User.findById(payload.sub, function (err, foundedUser) {
         if (err) return done(err, false);
-        if (user) {
+        if (foundedUser) {
             done(null, foundedUser);
         } else {
             done(null, false);
