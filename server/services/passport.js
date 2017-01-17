@@ -3,8 +3,24 @@ const User = require('../models/user');
 const config = require('../config');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-
+const LocalStrategy = require('passport-local');
 //can be made for facebook, google, another authorization. search passport facebook strategy
+
+//create local strategy to authenticate with email and password then provide jwt token to user
+//use email instead username by default
+const localLogin = new LocalStrategy({ usernameField: 'email' }, function (email, password, done) {
+    //verify this email and password, call done with user
+    // if it is the correct email and password
+    //otherwise, call done with false
+    User.findOne({ email: email }, function (err, res) {
+        if (err) return done(err);
+        if (!user) { return done(null, false); }// no user found with this credentials
+
+        //compare passwords - is 'password' equal to user.password
+        
+    });
+
+});
 
 //set options for jwt strategy
 const jwtOptions = {
