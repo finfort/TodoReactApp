@@ -1,8 +1,21 @@
+const jwt = require('jwt-simple');
 const User = require('../models/user');
+const config = require('../config');
+
+/// send authorized user with token, credential
+function tokenForUser(user){
+    const timestamp = Date.now()
+    return jwt.encode({sub: user.id, iat:timestamp}, config.secret);
+    //subject who token belong to
+    // iat token issued at time
+}
 
 exports.signup = function (req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
+
+    if (!email || !password)
+        return res.status(422).send({ error: "Email and password must be provided" });
 
     // check if user with given email exists
     User.findOne({ email: email }, function (err, existingUser) {
@@ -24,7 +37,8 @@ exports.signup = function (req, res, next) {
 
         user.save(function (err) { //save user to mongo and recieve callback when its done 
             if (err) next(err);
-            res.json(user);
+            res.json( {token: tokenForUser(user)});
+            // res.json( {token: user});
         })
 
 
