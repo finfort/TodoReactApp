@@ -4,7 +4,7 @@ const config = require('../config');
 
 /// send authorized user with token, credential
 function tokenForUser(user){
-    const timestamp = Date.now()
+    const timestamp = new Date.getTime();
     return jwt.encode({sub: user.id, iat:timestamp}, config.secret);
     //subject who token belong to
     // iat token issued at time
@@ -38,10 +38,15 @@ exports.signup = function (req, res, next) {
         user.save(function (err) { //save user to mongo and recieve callback when its done 
             if (err) next(err);
             res.json( {token: tokenForUser(user)});
-            // res.json( {token: user});
         })
 
 
     });
 
+}
+
+exports.signin = function(req,res, next){
+    //user has already had their email and password authorized
+    //give them their token
+    
 }
