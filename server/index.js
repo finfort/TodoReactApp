@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const app = express();
 const router = require('./router');
 
-mongoose.connect('mongodb://localhost:auth/auth');
+mongoose.connect('mongodb://localhost/auth');
 
 
 app.use(morgan('combined')); // use login framework as middleware in express (logs incoming requests)
