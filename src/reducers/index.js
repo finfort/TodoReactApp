@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as form } from 'redux-form'; // import for redux-form
 
 import authenticationReducer from './authentication';
 import todos from './todos';
@@ -9,7 +10,8 @@ const rootReducer = combineReducers({
   authenticated: authenticationReducer,
   todos,
   visibilityFilter,
-  users
+  users,
+  form
 });
 
 export default rootReducer;
