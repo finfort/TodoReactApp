@@ -8,7 +8,7 @@ const requireSignin = passport.authenticate('local', {session: false}); // give 
 
 module.exports = function (app) {
     app.get('/', requireAuth, function(req,res){
-        res.send('hello authorezed');
+        res.send({message: 'hello authorized'});
     })
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup', Authentication.signup); // how to sign in after this action?
