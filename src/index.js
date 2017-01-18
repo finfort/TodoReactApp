@@ -14,8 +14,9 @@ import UserList from './components/user_list';
 import reducers from './reducers';
 
 import Async from './middlewares/async';
+import reduxThunk from 'redux-thunk';
 
-const createStoreWithMiddleware = applyMiddleware(Async)(createStore);
+const createStoreWithMiddleware = applyMiddleware(Async, reduxThunk)(createStore);
 // const createStoreWithMiddleware = createStore(reducers, /* preloadedState, */ composeWithDevTools(
 //   applyMiddleware(),
 //   //applyMiddleware(...middleware),
@@ -28,9 +29,9 @@ ReactDOM.render(
     <Router history={browserHistory} >
       <Route path="/" component={App} >
         <Route path="/signin" component={Signin} />
-        <Route path="resources" component={requireAuth(Resources)} />
-        <Route path="todo" component={TodoComponent} />
-        <Route path="users" component={UserList} />
+        <Route path="/resources" component={requireAuth(Resources)} />
+        <Route path="/todo" component={TodoComponent} />
+        <Route path="/users" component={UserList} />
       </Route>
     </Router>
   </Provider>
