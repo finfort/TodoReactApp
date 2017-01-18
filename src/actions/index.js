@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   CHANGE_AUTH,
   FETCH_USERS
@@ -45,13 +46,16 @@ export function fetch_users() {
   }
 }
 
+const ROOT_URL = 'http://localhost:3090'; // api url
+
 //action creator should always return an object but
 // with redux thunk it returns a function
 // function(redux-thunk) get direct access to dispatch method (return function(dispacth) {})
 export function signinUser({email, password}) {
   return function (dispatch) {
     //Submit email/password to the server
-    
+    axios.post(`${ROOT_URL}/signin`, {email, password}) //es6 String Substitution
+
     // if request is good...
 
     // - Update state to indicate is authenticated
