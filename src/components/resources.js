@@ -4,7 +4,6 @@ import Header from './header';
 export default () => {
     return (
         <div>
-            <Header/>
             Super context
             <ul>
                 <li>1</li>

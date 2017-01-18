@@ -35,6 +35,9 @@ class Header extends Component {
                          <li className="nav-item">
                             <Link to="/users" className= "nav-link" >Users</Link>
                         </li>
+                         <li className="nav-item">
+                            <Link to="/signin" className= "nav-link" >Signin</Link>
+                        </li>
                         <li className="nav-item">
                             {this.authButton()}
                         </li>

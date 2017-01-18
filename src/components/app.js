@@ -6,10 +6,7 @@ export default class App extends Component {
     return (
       <div>
         <Header/>
-          {this.props.children}
-          <div>
-            Home path
-          </div>
+        {this.props.children}
       </div>
     );
   }
