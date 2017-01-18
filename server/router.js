@@ -11,5 +11,5 @@ module.exports = function (app) {
         res.send('hello authorezed');
     })
     app.post('/signin', requireSignin, Authentication.signin);
-    app.post('/signup', Authentication.signup);
+    app.post('/signup', Authentication.signup); // how to sign in after this action?
 }
