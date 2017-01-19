@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 
 import {
   AUTH_USER,
-  DEAUTH_USER,
+  UNAUTH_USER,
   FETCH_USERS,
   AUTH_ERROR
 } from './types';
@@ -42,6 +42,12 @@ export function fetch_users() {
     type: FETCH_USERS,
     payload: request
   }
+}
+export function signoutUser(){
+  localStorage.removeItem('token');
+  return {
+    type: UNAUTH_USER
+  };
 }
 
 const ROOT_URL = 'http://localhost:3090'; // api url
