@@ -5,42 +5,50 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class Header extends Component {
-    authButton() {
+    authLink() {
         if (this.props.authenticated) {
-            return <button onClick={() => this.props.authenticate(false)} className="nav-item" >Sign Out</button>;
+            return (
+                <li className="nav-item">
+                    <Link to="/signout" className="nav-link" >Sign Out</Link>
+                </li>
+            );
         } else {
-            return <button onClick={() => this.props.authenticate(true)} className="nav-item">Sign In</button>;
+            return [
+                <li className="nav-item" key={1}>
+                    <Link to="/signin" className="nav-link">Sign In</Link>
+                </li>,
+                <li className="nav-item" key={2}>
+                    <Link to="/signup" className="nav-link">Sign Up</Link>
+                </li>];
         }
     }
 
     render() {
         return (
             <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-                 <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                      <span className="navbar-toggler-icon"></span>
-                  </button>
-                
+                <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
                 <Link className="navbar-brand" to="/">Navbar</Link>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item active">
-                            <Link to="/" className= "nav-link" >Home</Link>
+                            <Link to="/" className="nav-link" >Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/resources" className= "nav-link" >Resources</Link>
-                        </li>
-                         <li className="nav-item">
-                            <Link to="/todo" className= "nav-link" >Todo</Link>
-                        </li>
-                         <li className="nav-item">
-                            <Link to="/users" className= "nav-link" >Users</Link>
-                        </li>
-                         <li className="nav-item">
-                            <Link to="/signin" className= "nav-link" >Signin</Link>
+                            <Link to="/resources" className="nav-link" >Resources</Link>
                         </li>
                         <li className="nav-item">
-                            {this.authButton()}
+                            <Link to="/todo" className="nav-link" >Todo</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link to="/users" className="nav-link" >Users</Link>
+                        </li>
+
+                        
+                        {this.authLink()}
+                        
                     </ul>
                 </div>
             </nav>
@@ -48,9 +56,9 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state, ownProps) => {
     return {
-        authenticated: state.authenticated
-    };
+        authenticated: state.authentication.authenticated
+    }
 }
 export default connect(mapStateToProps, actions)(Header);

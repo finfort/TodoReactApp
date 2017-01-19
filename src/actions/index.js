@@ -2,16 +2,13 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-  CHANGE_AUTH,
-  FETCH_USERS
+  AUTH_USER,
+  DEAUTH_USER,
+  FETCH_USERS,
+  AUTH_ERROR
 } from './types';
 
-export function authenticate(isLoggedIn) {
-  return {
-    type: CHANGE_AUTH,
-    payload: isLoggedIn
-  };
-}
+
 
 let nextTodoId = 0
 export const addTodo = (text) => {
@@ -61,19 +58,34 @@ export function signinUser({email, password}) {
         // if request is good...
 
         // - Update state to indicate is authenticated
-
+        dispatch({ type: AUTH_USER });
         // - Save JWT token
-
+        localStorage.setItem('token', response.data.token);
         // -redirect to the route '/resources' protected route
         browserHistory.push('/resources');
       })
       .catch(() => {
-
         // if request is bad
 
         // - show an error to ther user
+        dispatch(authError('Bad login info'));
       })
 
   }
 
 }
+
+export function authError(error){
+  return {
+    type: AUTH_ERROR,
+    payload: error
+  }
+}
+
+// export function authenticate(isLoggedIn) {
+//   return {
+//     type: CHANGE_AUTH,
+//     payload: isLoggedIn
+//   };
+// }
+

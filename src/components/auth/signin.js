@@ -8,6 +8,16 @@ class Signin extends Component {
     handleFormSubmit({email, password}){
         this.props.signinUser({email, password});
     }
+
+    renderAlert(){
+        if( this.props.errorMessage){
+            return(
+                <div className="alert alert-danger">
+                    <strong>Oops!</strong> {this.props.errorMessage}
+                </div>
+            );
+        }
+    }
     
     render() {
         const { handleSubmit } = this.props;
@@ -22,6 +32,7 @@ class Signin extends Component {
                     <label htmlFor="password" className="control-label">Password:</label>
                     <Field id="password" name="password" component="input" type="password" className="form-control" placeholder="Input password" />
                 </fieldset>
+                {this.renderAlert()}
                 <button action="submit" className="btn btn-primary">Sign in</button>
             </form>
         );
@@ -29,8 +40,14 @@ class Signin extends Component {
 
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        errorMessage: state.authentication.error
+    }
+}
+
 Signin = reduxForm({form: 'signin'})(Signin);
-Signin = connect(null, actions)(Signin); //https://github.com/erikras/redux-form/issues/1050
+Signin = connect(mapStateToProps, actions)(Signin); //https://github.com/erikras/redux-form/issues/1050
 
 
 export default Signin; // behave as connect helper

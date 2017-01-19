@@ -7,7 +7,7 @@ import visibilityFilter from './visibilityFilter';
 import users from './users';
 
 const rootReducer = combineReducers({
-  authenticated: authenticationReducer,
+  authentication: authenticationReducer,
   todos,
   visibilityFilter,
   users,
