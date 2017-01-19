@@ -4,21 +4,21 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class Signin extends Component {
-    
-    handleFormSubmit({email, password}){
-        this.props.signinUser({email, password});
+
+    handleFormSubmit({email, password}) {
+        this.props.signinUser({ email, password });
     }
 
-    renderAlert(){
-        if( this.props.errorMessage){
-            return(
+    renderAlert() {
+        if (this.props.errorMessage) {
+            return (
                 <div className="alert alert-danger">
                     <strong>Oops!</strong> {this.props.errorMessage}
                 </div>
             );
         }
     }
-    
+
     render() {
         const { handleSubmit } = this.props;
 
@@ -46,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-Signin = reduxForm({form: 'signin'})(Signin);
+Signin = reduxForm({ form: 'signin' })(Signin);
 Signin = connect(mapStateToProps, actions)(Signin); //https://github.com/erikras/redux-form/issues/1050
 
 
