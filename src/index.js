@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Route, browserHistory } from 'react-router';
-import { composeWithDevTools } from 'remote-redux-devtools';
+// import { composeWithDevTools } from 'remote-redux-devtools';
 
 import requireAuth from './components/require_authentication';
 import App from './components/app';
@@ -16,16 +16,17 @@ import reducers from './reducers';
 import Async from './middlewares/async';
 import reduxThunk from 'redux-thunk';
 
-const createStoreWithMiddleware = applyMiddleware(Async, reduxThunk)(createStore);
-// const createStoreWithMiddleware = createStore(reducers, /* preloadedState, */ composeWithDevTools(
-//   applyMiddleware(),
-//   //applyMiddleware(...middleware),
-//   //// other store enhancers if any
-// ));
+// const createStoreWithMiddleware = applyMiddleware(Async, reduxThunk)(createStore);
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const store = createStore(reducers, composeEnhancers(
+    applyMiddleware(Async, reduxThunk)
+  ));
 
 ReactDOM.render(
   //createStoreWithMiddleware
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  //createStoreWithMiddleware(reducers)
+  <Provider store={store}>
     <Router history={browserHistory} >
       <Route path="/" component={App} >
         <Route path="/signin" component={Signin} />
