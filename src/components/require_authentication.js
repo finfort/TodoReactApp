@@ -27,7 +27,7 @@ export default function(ComposedComponent){ //hire order component const Compose
     
     const mapStateToProps = (state, ownProps) => {
         return {
-            authenticated: state.authenticated
+            authenticated: state.authentication.authenticated
         }
     }
 

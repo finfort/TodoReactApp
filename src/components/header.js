@@ -46,7 +46,6 @@ class Header extends Component {
                             <Link to="/users" className="nav-link" >Users</Link>
                         </li>
 
-
                         {this.authLink()}
 
                     </ul>
