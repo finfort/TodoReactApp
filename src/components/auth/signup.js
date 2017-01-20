@@ -7,23 +7,10 @@ import * as actions from "../../actions";
 
 class Signup extends Component {
 
-    handleFormSubmit() {
-        // this.props.signinUser({ email, password });
-        console.log('handle submit');
+    handleFormSubmit(formProps) {
+        // call signup action creator        
+        this.props.signupUser(formProps);
     }
-
-    renderAlert() {
-        if (this.props.errorMessage) {
-            return (
-                <div className="alert alert-danger">
-                    <strong>Oops!</strong> {this.props.errorMessage}
-                </div>
-            );
-        }
-    }
-
-
-
 
     render() {
         const { handleSubmit } = this.props;
@@ -43,7 +30,6 @@ class Signup extends Component {
                 <fieldset className="form-group">
                     <label htmlFor="passwordConfirm" className="control-label">Confirm password:</label>
                     <Field id="passwordConfirm" name="passwordConfirm" component={renderPasswordField}  />
-
                 </fieldset>
 
                 <button action="submit" className="btn btn-primary">Sign up</button>
@@ -89,6 +75,6 @@ function validate(values) {
 }
 
 Signup = reduxForm({ form: 'signup', validate })(Signup);
-
+Signup = connect(null,actions)(Signup);
 
 export default Signup

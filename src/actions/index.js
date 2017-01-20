@@ -43,7 +43,7 @@ export function fetch_users() {
     payload: request
   }
 }
-export function signoutUser(){
+export function signoutUser() {
   localStorage.removeItem('token');
   return {
     type: UNAUTH_USER
@@ -62,7 +62,6 @@ export function signinUser({email, password}) {
       .then(response => {
         //response from server
         // if request is good...
-
         // - Update state to indicate is authenticated
         dispatch({ type: AUTH_USER });
         // - Save JWT token
@@ -72,7 +71,6 @@ export function signinUser({email, password}) {
       })
       .catch(() => {
         // if request is bad
-
         // - show an error to ther user
         dispatch(authError('Bad login info'));
       })
@@ -81,17 +79,22 @@ export function signinUser({email, password}) {
 
 }
 
-export function authError(error){
+export function authError(error) {
   return {
     type: AUTH_ERROR,
     payload: error
   }
 }
 
-// export function authenticate(isLoggedIn) {
-//   return {
-//     type: CHANGE_AUTH,
-//     payload: isLoggedIn
-//   };
-// }
+export function signupUser({email, password}) {
+  return function (dispatch) {
+    axios.post(`${ROOT_URL}/signup`, { email, password })
+      .then( response => {
 
+      })
+      .cath( () => {
+
+      })
+  }
+
+}
