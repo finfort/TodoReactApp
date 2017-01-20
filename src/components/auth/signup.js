@@ -9,6 +9,7 @@ class Signup extends Component {
 
     handleFormSubmit() {
         // this.props.signinUser({ email, password });
+        console.log('handle submit');
     }
 
     renderAlert() {
@@ -23,6 +24,7 @@ class Signup extends Component {
 
 
 
+
     render() {
         const { handleSubmit } = this.props;
 
@@ -30,26 +32,40 @@ class Signup extends Component {
             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                 <fieldset className="form-group">
                     <label htmlFor="email" className="control-label">Email:</label>
-                    <Field id="email" name="email" component="input" type="email" className="form-control" label="Input email" />
-                    {email.touched && ((error && <span>{error}</span>))}
+                    <Field id="email" name="email" component={renderEmailField}  />
+
                 </fieldset>
                 <fieldset className="form-group">
                     <label htmlFor="password" className="control-label">Password:</label>
-                    <Field id="password" name="password" component="password" type="password" className="form-control" label="Input password" />
-                    {password.touched && ((error && <span>{error}</span>))}
+                    <Field id="password" name="password" component={renderPasswordField} />
+
                 </fieldset>
                 <fieldset className="form-group">
                     <label htmlFor="passwordConfirm" className="control-label">Confirm password:</label>
-                    <Field id="passwordConfirm" name="passwordConfirm" component="password" type="password" className="form-control" label="Input password" />
-                    {passwordConfirm.touched && ((error && <span>{error}</span>))}
+                    <Field id="passwordConfirm" name="passwordConfirm" component={renderPasswordField}  />
+
                 </fieldset>
-                {this.renderAlert()}
+
                 <button action="submit" className="btn btn-primary">Sign up</button>
             </form>
         );
     }
 
 }
+const renderEmailField = (field) => (
+    <div className="input-row">
+        <input {...field.input} id={field.id} type="text"  className="form-control"/>
+        {field.meta.touched && field.meta.error &&
+            <span className="error">{field.meta.error}</span>}
+    </div>
+)
+const renderPasswordField = (field) => (
+    <div className="input-row">
+        <input {...field.input} id={field.id} type="password"  className="form-control"/>
+        {field.meta.touched && field.meta.error &&
+            <span className="error">{field.meta.error}</span>}
+    </div>
+)
 
 function validate(values) {
     const errors = {};
