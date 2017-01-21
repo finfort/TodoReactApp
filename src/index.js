@@ -14,6 +14,7 @@ import Resources from './components/resources';
 import TodoComponent from './components/TodoComponent';
 import UserList from './components/user_list';
 import reducers from './reducers';
+import { AUTH_USER } from './actions/types';
 
 import Async from './middlewares/async';
 import reduxThunk from 'redux-thunk';
@@ -24,6 +25,13 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const store = createStore(reducers, composeEnhancers(
     applyMiddleware(Async, reduxThunk)
   ));
+
+  // auto sign in user
+  const token = localStorage.getItem('token');
+  if(token){
+    // if we have token here log user in 
+    store.dispatch({type: AUTH_USER});
+  }
 
 ReactDOM.render(
   //createStoreWithMiddleware
