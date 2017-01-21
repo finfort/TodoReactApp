@@ -12,6 +12,14 @@ class Signup extends Component {
         this.props.signupUser(formProps);
     }
 
+    renderAlert(){
+        if(this.props.errorMessage){
+            return(
+                <div className="alert alert-danger">{this.props.errorMessage}</div>
+            );
+        }
+    }
+
     render() {
         const { handleSubmit } = this.props;
 
@@ -19,7 +27,7 @@ class Signup extends Component {
             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                 <fieldset className="form-group">
                     <label htmlFor="email" className="control-label">Email:</label>
-                    <Field id="email" name="email" component={renderEmailField}  />
+                    <Field id="email" name="email" component={renderEmailField} />
 
                 </fieldset>
                 <fieldset className="form-group">
@@ -29,9 +37,9 @@ class Signup extends Component {
                 </fieldset>
                 <fieldset className="form-group">
                     <label htmlFor="passwordConfirm" className="control-label">Confirm password:</label>
-                    <Field id="passwordConfirm" name="passwordConfirm" component={renderPasswordField}  />
+                    <Field id="passwordConfirm" name="passwordConfirm" component={renderPasswordField} />
                 </fieldset>
-
+                {this.renderAlert()}
                 <button action="submit" className="btn btn-primary">Sign up</button>
             </form>
         );
@@ -40,14 +48,14 @@ class Signup extends Component {
 }
 const renderEmailField = (field) => (
     <div className="input-row">
-        <input {...field.input} id={field.id} type="text"  className="form-control"/>
+        <input {...field.input} id={field.id} type="text" className="form-control" />
         {field.meta.touched && field.meta.error &&
             <span className="error">{field.meta.error}</span>}
     </div>
 )
 const renderPasswordField = (field) => (
     <div className="input-row">
-        <input {...field.input} id={field.id} type="password"  className="form-control"/>
+        <input {...field.input} id={field.id} type="password" className="form-control" />
         {field.meta.touched && field.meta.error &&
             <span className="error">{field.meta.error}</span>}
     </div>
@@ -74,7 +82,11 @@ function validate(values) {
     return errors;
 }
 
+function mapStateToProps(state) {
+    return { errorMessage: state.authentication.error }
+}
+
 Signup = reduxForm({ form: 'signup', validate })(Signup);
-Signup = connect(null,actions)(Signup);
+Signup = connect(mapStateToProps, actions)(Signup);
 
 export default Signup
