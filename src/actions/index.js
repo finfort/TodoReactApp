@@ -5,7 +5,8 @@ import {
   AUTH_USER,
   UNAUTH_USER,
   FETCH_USERS,
-  AUTH_ERROR
+  AUTH_ERROR,
+  FETCH_MESSAGE
 } from './types';
 
 
@@ -102,4 +103,22 @@ export function signupUser({email, password}) {
       })
   }
 
+}
+
+export function fetchMessage() {
+  return function (dispatch) {
+    axios.get(ROOT_URL, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+      .then(res => {
+        console.log(res.data.message);
+        dispatch({
+          type: FETCH_MESSAGE,
+          payload: res.data.message
+        })
+      })
+       .catch((response) => {
+        // debugger;
+      })
+  }
 }

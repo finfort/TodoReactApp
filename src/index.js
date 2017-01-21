@@ -19,8 +19,6 @@ import { AUTH_USER } from './actions/types';
 import Async from './middlewares/async';
 import reduxThunk from 'redux-thunk';
 
-// const createStoreWithMiddleware = applyMiddleware(Async, reduxThunk)(createStore);
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const store = createStore(reducers, composeEnhancers(
     applyMiddleware(Async, reduxThunk)
@@ -34,8 +32,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   }
 
 ReactDOM.render(
-  //createStoreWithMiddleware
-  //createStoreWithMiddleware(reducers)
   <Provider store={store}>
     <Router history={browserHistory} >
       <Route path="/" component={App} >
