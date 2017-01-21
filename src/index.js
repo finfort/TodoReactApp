@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 // import { composeWithDevTools } from 'remote-redux-devtools';
 
 import requireAuth from './components/require_authentication';
 import App from './components/app';
+import HomePage from './components/homePage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
 import Resources from './components/resources';
@@ -30,6 +31,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory} >
       <Route path="/" component={App} >
+        <IndexRoute component={HomePage}/>
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
         <Route path="/resources" component={requireAuth(Resources)} />
