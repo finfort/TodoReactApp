@@ -111,14 +111,12 @@ export function fetchMessage() {
       headers: { authorization: localStorage.getItem('token') }
     })
       .then(res => {
-        console.log(res.data.message);
         dispatch({
           type: FETCH_MESSAGE,
           payload: res.data.message
         })
       })
        .catch((response) => {
-        // debugger;
       })
   }
 }
