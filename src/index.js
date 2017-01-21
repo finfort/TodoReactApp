@@ -24,6 +24,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     applyMiddleware(Async, reduxThunk)
   ));
 
+  //TODO
+  // FACEBOOK authorization
+  // google coordinates selection and memorization on map
+
+
   // auto sign in user
   const token = localStorage.getItem('token');
   if(token){
