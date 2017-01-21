@@ -20,6 +20,11 @@ class Signup extends Component {
         }
     }
 
+    componentWillMount(){
+        //clean error before
+        this.props.authError('');
+    }
+
     render() {
         const { handleSubmit } = this.props;
 

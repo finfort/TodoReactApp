@@ -9,6 +9,11 @@ class Signin extends Component {
         this.props.signinUser({ email, password });
     }
 
+    componentWillMount() {
+        //clean error before
+        this.props.authError('');
+    }
+    
     renderAlert() {
         if (this.props.errorMessage) {
             return (

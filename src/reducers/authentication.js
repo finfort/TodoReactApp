@@ -8,7 +8,7 @@ import {
 export default function (state = {}, action) {
     switch (action.type) {
         case AUTH_USER:
-            return { ...state, error: '', authenticated: true }; // clean error when loggen in
+            return { ...state, authenticated: true }; // clean error when loggen in //error: '',
         case UNAUTH_USER:
             return { ...state, authenticated: false };
         case AUTH_ERROR:
