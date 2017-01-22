@@ -27,6 +27,8 @@ const store = createStore(reducers, composeEnhancers(
 //TODO
 // FACEBOOK authorization
 // google coordinates selection and memorization on map
+// debugging from vs code
+// serving react from express
 
 
 // auto sign in user

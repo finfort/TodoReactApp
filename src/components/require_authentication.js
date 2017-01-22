@@ -6,16 +6,8 @@ import { connect } from 'react-redux';
  * @type {function(ComposedComponent) } 
  */
 export default function (ComposedComponent) { //hire order component const Composedcomponent = Authentication(ResourcesComponent)  <ComposedComponent />
-    Authentication.contextTypes = { // class level property(static) //static contextTypes = { // class level property(static)
-        router: React.PropTypes.object
-    };
-    //how to replace it this.context not stable api?
-    // for getting access in this.context
+
     class Authentication extends Component {
-
-
-
-
         // check if user authenticated if not push to /
         componentWillMount() {
             if (!this.props.authenticated)
@@ -31,6 +23,12 @@ export default function (ComposedComponent) { //hire order component const Compo
             return <ComposedComponent {...this.props} />;
         }
     }
+
+    Authentication.contextTypes = { // class level property(static) //static contextTypes = { // class level property(static)
+        router: React.PropTypes.object
+    };
+    //how to replace it this.context not stable api?
+    // for getting access in this.context
 
     const mapStateToProps = (state) => {
         return {

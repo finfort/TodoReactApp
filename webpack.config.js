@@ -1,7 +1,7 @@
 /* eslint-disable */
 module.exports = {
   filename: __filename,
-  debug: true,
+  // debug: true,
   devtool: 'source-map',
 
 

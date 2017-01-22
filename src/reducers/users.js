@@ -11,9 +11,9 @@ const users = (state = usersInitialState, action) => {
         //return new state with taked action
         //just make new state without any other side calls
         default:
-            return state
+            return state;
     }
     // return state;
-}
+};
 
 export default users;

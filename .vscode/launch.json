@@ -1,10 +1,12 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Launch Chrome against localhost",
             "type": "chrome",
             "request": "launch",
+            "sourceMaps": true,
             "url": "http://localhost:8080",
             "webRoot": "${workspaceRoot}"
         },
@@ -12,9 +14,9 @@
             "name": "Attach to Chrome",
             "type": "chrome",
             "request": "attach",
-            "sourceMaps": true,
             "port": 9222,
-            "webRoot": "${workspaceRoot}/src/index.js"
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}/src/"
         }
     ]
 }
