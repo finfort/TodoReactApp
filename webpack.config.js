@@ -1,10 +1,9 @@
+/* eslint-disable */
 module.exports = {
   filename: __filename,
   debug: true,
-  devtool: '#source-map',
-  output: {
-    pathinfo: true
-  },
+  devtool: 'source-map',
+
 
   entry: [
     './src/index.js'
@@ -12,6 +11,7 @@ module.exports = {
   output: {
     path: __dirname,
     publicPath: '/',
+    pathinfo: true,
     filename: 'bundle.js'
   },
   module: {

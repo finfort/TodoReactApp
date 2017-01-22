@@ -11,7 +11,7 @@ import {
 
 
 
-let nextTodoId = 0
+let nextTodoId = 0;
 export const addTodo = (text) => {
   //return simple object what to do with state
   //change data only through actions
@@ -19,22 +19,22 @@ export const addTodo = (text) => {
     type: 'ADD_TODO',
     id: nextTodoId++,
     text
-  }
-}
+  };
+};
 
 export const setVisibilityFilter = (filter) => {
   return {
     type: 'SET_VISIBILITY_FILTER',
     filter
-  }
-}
+  };
+};
 
 export const toggleTodo = (id) => {
   return {
     type: 'TOGGLE_TODO',
     id
-  }
-}
+  };
+};
 
 
 export function fetch_users() {
@@ -42,7 +42,7 @@ export function fetch_users() {
   return {
     type: FETCH_USERS,
     payload: request
-  }
+    };
 }
 export function signoutUser() {
   localStorage.removeItem('token');
@@ -75,9 +75,9 @@ export function signinUser({email, password}) {
         // if request is bad
         // - show an error to ther user
         dispatch(authError('Bad login info'));
-      })
+      });
 
-  }
+  };
 
 }
 
@@ -85,7 +85,7 @@ export function authError(error) {
   return {
     type: AUTH_ERROR,
     payload: error
-  }
+  };
 }
 
 export function signupUser({email, password}) {
@@ -99,10 +99,10 @@ export function signupUser({email, password}) {
       })
       .catch((response) => {
         if (response.response.data) {
-          dispatch(authError(response.response.data.error))
+          dispatch(authError(response.response.data.error));
         }
-      })
-  }
+      });
+  };
 
 }
 
@@ -115,9 +115,9 @@ export function fetchMessage() {
         dispatch({
           type: FETCH_MESSAGE,
           payload: res.data.message
-        })
-      })
-       .catch((response) => {
-      })
-  }
+        });
+      });
+      //  .catch((response) => {
+      // });
+  };
 }

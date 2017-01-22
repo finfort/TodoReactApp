@@ -52,9 +52,9 @@ class Header extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         authenticated: state.authentication.authenticated
-    }
-}
+    };
+};
 export default connect(mapStateToProps, actions)(Header);
