@@ -1,3 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
+import MinesTable from './MinesTable';
+import { MINES } from './helper';
 
-export default () => <div>Home page</div>
+class HomePage extends Component {
+    render() {
+        return (
+            <div>
+                <MinesTable mines={MINES} />
+            </div>
+        );
+    }
+}
+
+
+
+export default HomePage;

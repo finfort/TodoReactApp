@@ -13,6 +13,9 @@ import Signup from './components/auth/signup';
 import Resources from './components/resources';
 import TodoComponent from './components/TodoComponent';
 import UserList from './components/user_list';
+
+import Mine from './components/Mine';
+
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types';
 
@@ -43,6 +46,7 @@ ReactDOM.render(
     <Router history={browserHistory} >
       <Route path="/" component={App} >
         <IndexRoute component={HomePage} />
+         <Route path="/mine/:mineId" component={Mine}/>
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
         <Route path="/resources" component={requireAuth(Resources)} />
