@@ -23,9 +23,9 @@ class Resources extends Component {
 function mapStateToProps(state) {
     return {
         message: state.home.message
-    }
+    };
 }
 
-Resources = connect(mapStateToProps, actions)(Resources);
+Resources = connect(mapStateToProps, actions)(Resources);//eslint-disable-line
 
-export default Resources
+export default Resources;

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';// eslint-disable-line
+
 import { browserHistory } from 'react-router';
+
+import {Layer, Stage} from 'react-konva';
+
+import SensorSmall from './SensorSmall';
 import * as Helper from './helper';
 
 class Mine extends Component {
@@ -10,14 +16,22 @@ class Mine extends Component {
         });
     }
 
+    // Stage - is a div wrapper
+    // Layer - is a <canvas> element on the page
+    // so you can use several canvases. It may help you to improve performance a lot.
 
     render() {
         return (
             <div>
-                <button onClick={browserHistory.goBack}>Go Back</button>
-                <h2>{
-                    this.state.mine.mineName
-                }</h2>
+                <button onClick={browserHistory.goBack} className="button icon-left">Go Back</button>
+                <h2>{this.state.mine.mineName}</h2>
+
+                <Stage width={700} height={700}>
+                    <Layer>
+                        <SensorSmall />
+                    </Layer>
+                </Stage>
+
             </div>
         );
     }
