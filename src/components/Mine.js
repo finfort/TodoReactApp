@@ -15,6 +15,11 @@ class Mine extends Component {
             mine: Helper.findMinebyId(this.props.params.mineId)
         });
     }
+    //try to use fabric.js over here
+    // https://github.com/liuhong1happy/react-raphael
+    // https://github.com/seal789ie/react-fabricjs
+    // https://jsfiddle.net/STHayden/2pncoLb5/
+    // enable hot reloading in react
 
     // Stage - is a div wrapper
     // Layer - is a <canvas> element on the page

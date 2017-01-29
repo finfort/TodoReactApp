@@ -16,13 +16,14 @@ class SensorSmall extends React.Component {
         color: Konva.Util.getRandomColor()// eslint-disable-line
       });
     }
+
     render() {
         return (
             <Rect
-                x={10} y={10} width={50} height={50}
+                x={10} y={10} width={200} height={200}
                 fill={this.state.color}
                 shadowBlur={10}
-                onClick={this.handleClick}
+                onClick={this.handleClick}    
             />
         );
     }
