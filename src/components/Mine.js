@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';// eslint-disable-line
 
 import { browserHistory } from 'react-router';
 
-import {Layer, Stage} from 'react-konva';
 
 import SensorSmall from './SensorSmall';
 import * as Helper from './helper';
@@ -30,13 +29,7 @@ class Mine extends Component {
             <div>
                 <button onClick={browserHistory.goBack} className="button icon-left">Go Back</button>
                 <h2>{this.state.mine.mineName}</h2>
-
-                <Stage width={700} height={700}>
-                    <Layer>
-                        <SensorSmall />
-                    </Layer>
-                </Stage>
-
+                    <SensorSmall/>
             </div>
         );
     }

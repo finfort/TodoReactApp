@@ -4,50 +4,52 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions';
 
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+
 class Header extends Component {
     authLink() {
         if (this.props.authenticated) {
             return (
-                <li className="nav-item">
-                    <a onClick={() => this.props.signoutUser()} href="#" className="nav-link" >Sign Out</a>
-                </li>
+                <NavItem eventKey={6}  onClick={() => this.props.signoutUser()} >
+                   Sign Out
+                </NavItem>
             );
         } else {
             return [
-                <li className="nav-item" key={1}>
-                    <Link to="/signin" className="nav-link">Sign In</Link>
-                </li>,
-                <li className="nav-item" key={2}>
-                    <Link to="/signup" className="nav-link">Sign Up</Link>
-                </li>];
+                <LinkContainer to='/signin'>
+                    <NavItem eventKey={4} key={1}>Sign in</NavItem>
+                </LinkContainer>,
+                <LinkContainer to='/signup'>
+                    <NavItem eventKey={5} key={2}>Sign up</NavItem>
+                </LinkContainer>
+                ];
         }
     }
 
     render() {
         return (
-            <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-                <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+            <Navbar>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <Link to="/">Home</Link>
+                    </Navbar.Brand>
+                </Navbar.Header>
+                <Nav>
+                    <LinkContainer to='/resources'>
+                        <NavItem eventKey={1}>Resources</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to='/todo'>
+                        <NavItem eventKey={2} href="#">Todo</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to='/users'>
+                        <NavItem eventKey={3} href="#">Users</NavItem>
+                    </LinkContainer>
 
-                <Link className="navbar-brand" to="/">Home</Link>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <Link to="/resources" className="nav-link" >Resources</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/todo" className="nav-link" >Todo</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/users" className="nav-link" >Users</Link>
-                        </li>
+                     {this.authLink()}
 
-                        {this.authLink()}
-
-                    </ul>
-                </div>
-            </nav>
+                </Nav>
+            </Navbar>
         );
     }
 }

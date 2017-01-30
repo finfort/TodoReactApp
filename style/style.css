@@ -8,3 +8,42 @@
     width: 30%;
     min-width: 300px;
 }
+
+.sensor-large{
+    background-color: limegreen;
+    font-family: Tahoma, 'Times New Roman', Times, serif;
+    font-size: large;
+    width: 200px;
+    border-radius: 5px;
+}
+
+.sensor-value{
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.row-alarms{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.units{
+    font-size: medium;
+}
+
+.alarm1-value, .alarm2-value{
+    font-size: medium;
+    text-align: right;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.alarm-direction{
+
+}
+
+.sensor-description{
+    margin: 0 5px 0 5px;
+    font-size: smaller;
+}
