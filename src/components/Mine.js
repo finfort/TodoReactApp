@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';// eslint-disable-line
 
 import { browserHistory } from 'react-router';
 
+import { Glyphicon } from 'react-bootstrap';
 
 import SensorSmall from './SensorSmall';
 import * as Helper from './helper';
@@ -18,16 +19,17 @@ class Mine extends Component {
     // https://github.com/liuhong1happy/react-raphael
     // https://github.com/seal789ie/react-fabricjs
     // https://jsfiddle.net/STHayden/2pncoLb5/
-    // enable hot reloading in react
 
-    // Stage - is a div wrapper
-    // Layer - is a <canvas> element on the page
-    // so you can use several canvases. It may help you to improve performance a lot.
+
+    // https://react-bootstrap.github.io/components.html
 
     render() {
         return (
             <div>
-                <button onClick={browserHistory.goBack} className="button icon-left">Go Back</button>
+                <button onClick={browserHistory.goBack} bsSize="xsmall">
+                <Glyphicon glyph="circle-arrow-left"/>
+                 Назад
+                </button>
                 <h2>{this.state.mine.mineName}</h2>
                     <SensorSmall/>
                     <SensorSmall/>

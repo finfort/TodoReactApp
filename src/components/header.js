@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions';
 
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { NavItemRouter } from './helpers/NavItemRouter';
 
 class Header extends Component {
     authLink() {
@@ -17,36 +18,50 @@ class Header extends Component {
             );
         } else {
             return [
-                <LinkContainer to='/signin'>
+                <LinkContainer to='signin'>
                     <NavItem eventKey={4} key={1}>Sign in</NavItem>
                 </LinkContainer>,
-                <LinkContainer to='/signup'>
+                <LinkContainer to='signup'>
                     <NavItem eventKey={5} key={2}>Sign up</NavItem>
                 </LinkContainer>
                 ];
         }
     }
 
+
+// <ul className="nav nav-tabs"> 
+//   <NavItem to='/home' index={true} >Home</NavItem>
+//   <NavItem to='/about'>About</NavItem>
+// </ul>
+
+
     render() {
         return (
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Link to="/">Home</Link>
+                        <Link to="/" onlyActiveOnIndex activeClassName="active" >Home</Link>
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <LinkContainer to='/resources'>
-                        <NavItem eventKey={1}>Resources</NavItem>
-                    </LinkContainer>
-                    <LinkContainer to='/todo'>
-                        <NavItem eventKey={2} href="#">Todo</NavItem>
-                    </LinkContainer>
-                    <LinkContainer to='/users'>
-                        <NavItem eventKey={3} href="#">Users</NavItem>
-                    </LinkContainer>
-
-                     {this.authLink()}
+                {
+                    <NavItemRouter to='/todo'>Todo</NavItemRouter>
+                // <NavItemRouter to='/users'>Users</NavItemRouter>
+            }
+                {
+                    // <LinkContainer to='/resources'  activeClassName="active"> 
+                    //     <NavItem eventKey={1} >Resources</NavItem>
+                    // </LinkContainer>
+                    // <LinkContainer to='/todo'  activeClassName="active">
+                    //     <NavItem eventKey={2} >Todo</NavItem>
+                    // </LinkContainer>
+                    // <LinkContainer to='/users' activeClassName="active">
+                    //     <NavItem eventKey={3} >Users</NavItem>
+                    // </LinkContainer>
+}
+                     {
+                         //this.authLink()
+                        }
 
                 </Nav>
             </Navbar>

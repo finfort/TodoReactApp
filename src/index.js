@@ -46,12 +46,12 @@ ReactDOM.render(
     <Router history={browserHistory} >
       <Route path="/" component={App} >
         <IndexRoute component={HomePage} />
-         <Route path="/mine/:mineId" component={Mine}/>
-        <Route path="/signin" component={Signin} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/resources" component={requireAuth(Resources)} />
-        <Route path="/todo" component={TodoComponent} />
-        <Route path="/users" component={UserList} />
+         <Route path="mine/:mineId" component={Mine}/>
+        <Route path="signin" component={Signin} />
+        <Route path="signup" component={Signup} />
+        <Route path="resources" component={requireAuth(Resources)} />
+        <Route path="todo" component={TodoComponent} />
+        <Route path="users" component={UserList} />
       </Route>
     </Router>
   </Provider>
