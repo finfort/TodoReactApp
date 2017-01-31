@@ -30,6 +30,9 @@ class Mine extends Component {
                 <button onClick={browserHistory.goBack} className="button icon-left">Go Back</button>
                 <h2>{this.state.mine.mineName}</h2>
                     <SensorSmall/>
+                    <SensorSmall/>
+                    <SensorSmall/>
+                    
             </div>
         );
     }

@@ -1,4 +1,3 @@
-
 var path = require('path');
 var webpack = require('webpack');
 /* eslint-disable */
@@ -8,8 +7,10 @@ module.exports = {
   devtool: 'source-map',
 
   entry: [
-   //'webpack-dev-server/client?http://localhost:8080/webpack-dev-server/', // WebpackDevServer host and port
-    'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+    'webpack-dev-server/client?http://localhost:8080', // WebpackDevServer host and port
+    'webpack/hot/dev-server', // "only" prevents reload on syntax errors
+    // 'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+    // 'webpack-hot-middleware/client',
     './src/index.js'
   ],
   output: {
@@ -18,13 +19,15 @@ module.exports = {
     pathinfo: true,
     filename: 'bundle.js'
   },
-    plugins: [
+  plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     loaders: [{
+      test: /\.js$/,
       exclude: /node_modules/,
-      loaders: ['react-hot', 'babel']
+      loaders: ['react-hot', 'babel'],
+      include: path.join(__dirname, 'src')
     }]
   },
   resolve: {
@@ -32,6 +35,7 @@ module.exports = {
   },
 
   devServer: {
+    hot: true,//hot 
     historyApiFallback: true,
     contentBase: './'
   }

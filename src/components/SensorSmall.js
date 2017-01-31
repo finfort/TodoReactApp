@@ -37,7 +37,7 @@ class SensorSmall extends React.Component {
             </div>
           </Row>
           <Row>
-            <div className="sensor-description  col-xs-12">CH4 Датчик потока воздуха</div>
+            <div className="sensor-description  col-xs-12">Датчик потока воздуха</div>
           </Row>
       </div>
 
