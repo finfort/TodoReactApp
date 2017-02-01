@@ -8,7 +8,7 @@ class SensorLarge extends React.Component {
     super(props);
     this.state = {
       color: 'green',
-      
+
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -18,14 +18,15 @@ class SensorLarge extends React.Component {
     });
   }
 
-  handleData(){
+  handleData() {
 
   }
 
   render() {
-    let id_sensor, prefix_long, data_type, id_controller, channel, sensor_description = this.props;
+    let {id_sensor, prefix_long, data_type, id_controller, channel, sensor_description} = this.props;
     return (
-      <div className="sensor-large">
+      <div className="row">
+        <div className="sensor-large pull-left">
           <Row>
             <Col xs={4} className="sensor-value">0</Col>
             <div className="units col-xs-3">{data_type}</div>
@@ -43,8 +44,10 @@ class SensorLarge extends React.Component {
             </div>
           </Row>
           <Row>
-            <div className="sensor-description  col-xs-12">{prefix_long}</div>
+            <div className="sensor-type  col-xs-12">{prefix_long}</div>
           </Row>
+        </div>
+        <p >{sensor_description}</p>
       </div>
 
     );

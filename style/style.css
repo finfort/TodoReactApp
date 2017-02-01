@@ -43,7 +43,11 @@
 
 }
 
-.sensor-description{
+.sensor-type{
     margin: 0 5px 0 5px;
     font-size: smaller;
+}
+
+.sensor-description{
+    padding-left: 10px;
 }

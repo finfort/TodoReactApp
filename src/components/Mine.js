@@ -46,8 +46,8 @@ class Mine extends Component {
                 <h2>{this.state.mine.mineName}</h2>
                 {
                     Data.sensorsDescription.map((sensor, index) => {
-                        return (<div>
-                            {console.log(sensor, index)}
+                        if(sensor.data_type == "дискретный") return;
+                        return (
                             <SensorLarge key={sensor.id_sensor} 
                                 id_sensor={sensor.id_sensor}
                                 prefix_long={sensor.prefix_long}
@@ -56,16 +56,11 @@ class Mine extends Component {
                                 channel={sensor.channel}
                                 sensor_description={sensor.sensor_description}
                                 />
-                        </div>
                         );
                     }
                     )
                 }
-                <SensorLarge id_sensor={1}
-                    prefix_long={"ch4"}
-                    data_type={"dd"}
-                    sensor_description={"sensor.sensor_desc"} />
-
+                
             </div>
         );
     }
