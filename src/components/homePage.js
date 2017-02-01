@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MinesTable from './MinesTable';
-import { MINES } from './helper';
+import { MINES } from './helpers/mines';
 
 class HomePage extends Component {
     render() {
