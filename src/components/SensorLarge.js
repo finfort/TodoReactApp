@@ -69,7 +69,13 @@ class SensorLarge extends React.Component {
     let ch_sp1_a = 0;
     let ch_sp2_a = 0;
     //where i should update this data? not here///
+    // controller window
+    // sensor graph
+    // login check
+    // nodejs service for data fetching
     //todo check last data on null and is it exist 
+    //todo data validation formatting
+    // sensor alarm + sound
     // if not send default data
 
     //check if object lastData contains ch_val and other fields
