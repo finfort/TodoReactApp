@@ -51,3 +51,8 @@
 .sensor-description{
     padding-left: 10px;
 }
+
+.sensor-block{
+    margin-left: 5px;
+    margin-bottom: 5px;
+}

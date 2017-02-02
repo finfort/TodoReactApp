@@ -10,6 +10,14 @@ import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
 
 class Mine extends Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            lastData: {}
+        }
+    }
+
+    // when users goes from MinesList get info from route which mine selected, or grub info from props
     componentWillMount() {
         this.setState({
             // route components are rendered with useful information, like URL params
@@ -22,16 +30,67 @@ class Mine extends Component {
     // https://jsfiddle.net/STHayden/2pncoLb5/
     // https://react-bootstrap.github.io/components.html
 
-    // <SensorLarge id_sensor={sensor.id_sensor}
-    //                 prefix_long={sensor.prefix_long}
-    //                 data_type={sensor.data_type}
-    //                 id_controller={sensor.id_controller}
-    //                 channel={sensor.channel}
-    //                 sensor_description={sensor.sensor_description}
-    // />
-
-
+    getLastDataForSensor(controller, channel){
+        this.state.lastData;
+    }
     generateScreen() {
+
+
+        return Data.sensorsDescription.map((sensor, index) => {
+            //filter on дискретный
+            if (sensor.data_type == "дискретный") return;
+
+            //filter lastData from One controller and pass it to Sensor
+            // // if (!lastDataOfOneController) {// run this just once
+            //     for (let i = 0; i < this.state.lastData.length; i++) {
+            //         if (this.state.lastData[i].ContrName)
+            //             if (this.state.lastData[i].ContrName == sensor.id_controller)
+            //                 lastDataOfOneController = this.state.lastData[i]
+
+            //     }
+            // // }
+            
+            // let lastData = getLastDataForSensor(sensor.id_controller, sensor.channel);
+
+            return (
+                <SensorLarge key={sensor.id_sensor}
+                    id_sensor={sensor.id_sensor}
+                    prefix_long={sensor.prefix_long}
+                    data_type={sensor.data_type}
+                    id_controller={sensor.id_controller}
+                    channel={sensor.channel}
+                    sensor_description={sensor.sensor_description}
+                    lastData={this.state.lastData}
+                    />
+            );
+        });
+    }
+    // When component rendered updated their data
+    // Mine should subscribe to recieve data from server
+    componentDidMount() {
+        //make request to server with axios
+        // or get dummy data from Data.lastData
+        //     this.serverRequest = 
+        //   axios
+        //     .get("http://codepen.io/jobs.json")
+        //     .then(function(result) {    
+        //       _this.setState({
+        //         jobs: result.data.jobs
+        //       });
+        //     })
+        this.setState({
+            lastData: Data.lastData
+        })
+        //should this be state? set it and access to it from sensor large child component to update by itself
+
+    }
+
+    // On unmount component abourt request to server
+    componentWillUnmount() {
+        //this.serverRequest.abort();
+    }
+
+    updateCurrData() {
 
     }
 
@@ -45,22 +104,9 @@ class Mine extends Component {
                 </button>
                 <h2>{this.state.mine.mineName}</h2>
                 {
-                    Data.sensorsDescription.map((sensor, index) => {
-                        if(sensor.data_type == "дискретный") return;
-                        return (
-                            <SensorLarge key={sensor.id_sensor} 
-                                id_sensor={sensor.id_sensor}
-                                prefix_long={sensor.prefix_long}
-                                data_type={sensor.data_type}
-                                id_controller={sensor.id_controller}
-                                channel={sensor.channel}
-                                sensor_description={sensor.sensor_description}
-                                />
-                        );
-                    }
-                    )
+                    sensors
                 }
-                
+
             </div>
         );
     }
