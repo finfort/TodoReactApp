@@ -29,7 +29,7 @@
     "remote-redux-devtools": "^0.5.7",
     "webpack": "1.14.0",
     "webpack-dev-server": "1.16.2",
-    "webpack-hot-middleware": "^2.16.1"    
+    "webpack-hot-middleware": "^2.16.1"
   },
   "dependencies": {
     "axios": "^0.15.3",

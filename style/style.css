@@ -21,6 +21,7 @@
     text-align: center;
     font-size: larger;
     font-weight: bold;
+    padding-right: 0 !important;
 }
 
 .row-alarms{
@@ -34,9 +35,8 @@
 
 .alarm1-value, .alarm2-value{
     font-size: medium;
-    text-align: right;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0 !important;
+
 }
 
 .alarm-direction{
@@ -55,4 +55,41 @@
 .sensor-block{
     margin-left: 5px;
     margin-bottom: 5px;
+}
+
+.controller-channel{
+    font-size: small;
+    font-weight: normal;
+}
+
+
+.sp2{
+    animation-duration: 1000ms;
+    animation-name: sp2;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+}
+@-webkit-keyframes sp2 {
+   from { background-color: red; }
+   to { background-color: yellow; }
+  }
+ @-moz-keyframes sp2 {
+   from { background-color: red; }
+   to { background-color: yellow; }
+ }
+ @-ms-keyframes sp2 {
+   from { background-color: red; }
+   to { background-color: yellow; }
+ }
+ @-o-keyframes sp2 {
+   from { background-color: red; }
+   to { background-color: yellow; }
+ }
+ @keyframes sp2 {
+   from { background-color: red; }
+   to { background-color: yellow; }
+ }
+
+ .sp1{
+
 }

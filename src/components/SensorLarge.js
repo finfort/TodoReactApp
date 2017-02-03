@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';// eslint-disable-line
-
 import { Grid, Row, Col } from 'react-bootstrap';
 
 class SensorLarge extends React.Component {
@@ -20,6 +19,15 @@ class SensorLarge extends React.Component {
 
   handleData() {
 
+  }
+
+  formatValue(value) {
+    if (value == 0)
+      return 0;
+    value = Math.abs(value)
+    if (value <= 10) return value.toFixed(2);
+    if (value > 10 && value <= 50) return value.toFixed(1);
+    return value.toFixed(0);
   }
 
   render() {
@@ -52,8 +60,9 @@ class SensorLarge extends React.Component {
     ch1_fltex	Код ошибки
     ch1_sp1_a	Бит направления сработки уставки 1 (0 – на повышение, 1 – на понижение)
     ch1_sp2_a	Бит направления сработки уставки 2 (0 – на повышение, 1 – на понижение)
-
     */
+    let healthy = 1; //healthy by default
+    // let ContrName = 1; //controller number
     let ch_val = 0;
     let ch_sp1_val = 0;
     let ch_sp2_val = 0;
@@ -84,41 +93,85 @@ class SensorLarge extends React.Component {
       this.props.lastData.map((controllerRow) => {
         if (controllerRow['ContrName'] == id_controller) {
           // pull out data for sensor from sensor controller
-            ch_val = controllerRow["ch" + channel + "_val"];
-            ch_sp1_val = controllerRow["ch" + channel + "_sp1_val"];
-            ch_sp2_val = controllerRow["ch" + channel + "_sp2_val"];
-            ch_sp1 = controllerRow["ch" + channel + "_sp1"];
-            ch_sp2 = controllerRow["ch" + channel + "_sp2"];
-            ch_f = controllerRow["ch" + channel + "_f"];
-            ch_fltex = controllerRow["ch" + channel + "_fltex"];
-            ch_rawVal = controllerRow["ch" + channel + "_rawVal"];
-            ch_sp1_rawVal = controllerRow["ch" + channel + "_sp1_rawVal"];
-            ch_sp2_rawVal = controllerRow["ch" + channel + "_sp2_rawVal"];
-            ch_l = controllerRow["ch" + channel + "_l"];
-            ch_h = controllerRow["ch" + channel + "_h"];
-            ch_sp1_a = controllerRow["ch" + channel + "_sp1_a"];
-            ch_sp2_a = controllerRow["ch" + channel + "_sp2_a"];
+          // apply filtering data
+          healthy = controllerRow["healthy"];
+          ch_val = controllerRow["ch" + channel + "_val"];
+          ch_sp1_val = controllerRow["ch" + channel + "_sp1_val"];
+          ch_sp2_val = controllerRow["ch" + channel + "_sp2_val"];
+          ch_sp1 = controllerRow["ch" + channel + "_sp1"];
+          ch_sp2 = controllerRow["ch" + channel + "_sp2"];
+          ch_f = controllerRow["ch" + channel + "_f"];
+          ch_fltex = controllerRow["ch" + channel + "_fltex"];
+          ch_rawVal = controllerRow["ch" + channel + "_rawVal"];
+          ch_sp1_rawVal = controllerRow["ch" + channel + "_sp1_rawVal"];
+          ch_sp2_rawVal = controllerRow["ch" + channel + "_sp2_rawVal"];
+          ch_l = controllerRow["ch" + channel + "_l"];
+          ch_h = controllerRow["ch" + channel + "_h"];
+          ch_sp1_a = controllerRow["ch" + channel + "_sp1_a"];
+          ch_sp2_a = controllerRow["ch" + channel + "_sp2_a"];
 
+          // format value
+          ch_val = this.formatValue(ch_val);
+          ch_sp1_val = this.formatValue(ch_sp1_val);
+          ch_sp2_val = this.formatValue(ch_sp2_val);
         }
       });
     }
+    //check if no data on last data show connection error with database
+
+    let sensorState;
+    if (this.props.lastData[0] != null) { // if there exist data
+      //switch on states
+      // current state
+      // debugger;
+      if (!healthy) {
+        sensorState = "NotHealthy";
+      }
+      else if (ch_rawVal == 32771) {
+        sensorState = "ChannelClosed";
+      }
+      else if (ch_f) {
+        sensorState = "ChannelFault";
+      }
+      else {
+        if (ch_sp1) {
+          sensorState = "ChannelSP1";
+        }
+        if (ch_sp2) {
+          sensorState = "ChannelSP2";
+        }
+      }
+      // if no errors happend before and sensorstate empty, everything ok
+      if (sensorState == null) {
+        sensorState = "OK";
+      }
+    }
+    else {
+      sensorState = "NoData";
+    }
+    console.log(sensorState, id_controller, channel);
 
     return (
-      <div className="row sensor-block">
+      <div className="row sensor-block ">
         <div className="sensor-large pull-left">
           <Row>
-            <Col xs={4} className="sensor-value">{ch_val}</Col>
+            <Col xs={4} className="sensor-value">
+              <Row>{ch_val}</Row>
+              <Row>
+                <div className="controller-channel">K{id_controller}-{channel}</div>
+              </Row>
+            </Col>
             <div className="units col-xs-3">{data_type}</div>
             <div className="col-xs-5">
               <div className="row row-alarms">
-                <div className="col-xs-12">
+                <div className="col-xs-12 text-right">
                   <span className="alarm1-value">{ch_sp1_val}</span>
-                  <span className="alarm1-direction">{ch_sp1_a? '↓': '↑'}</span></div>
+                  <span className="alarm1-direction">{ch_sp1_a ? '↓' : '↑'}</span></div>
               </div>
               <div className="row row-alarms">
-                <div className="col-xs-12">
+                <div className="col-xs-12 text-right">
                   <span className="alarm2-value">{ch_sp2_val}</span>
-                  <span className="alarm2-direction">{ch_sp2_a? '↓': '↑'}</span></div>
+                  <span className="alarm2-direction">{ch_sp2_a ? '↓' : '↑'}</span></div>
               </div>
             </div>
           </Row>
