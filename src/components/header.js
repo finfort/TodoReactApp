@@ -37,16 +37,13 @@ class Header extends Component {
                 </Navbar.Header>
                 <Nav>
 
-                    {
-                        // className={this.props.location.pathname.startsWith('/todo') && 'active'}
-                    }
                     <LinkContainer to='/todo'>
                         <NavItem eventKey={2} >Todo</NavItem>
                     </LinkContainer>
                     <LinkContainer to='/users' >
                         <NavItem eventKey={3} >Users</NavItem>
                     </LinkContainer>
-                    <LinkContainer to='/resources' activeClassName="active">
+                    <LinkContainer to='/resources' >
                         <NavItem eventKey={1} >Resources</NavItem>
                     </LinkContainer>
 

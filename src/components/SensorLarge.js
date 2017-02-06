@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';// eslint-disable-line
-import { Grid, Row, Col } from 'react-bootstrap';
+import classNames from 'classnames';
+import { Card, CardImg, CardText, CardBlock,
+  CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 class SensorLarge extends React.Component {
   constructor(props) {
@@ -61,7 +63,7 @@ class SensorLarge extends React.Component {
     ch1_sp1_a	Бит направления сработки уставки 1 (0 – на повышение, 1 – на понижение)
     ch1_sp2_a	Бит направления сработки уставки 2 (0 – на повышение, 1 – на понижение)
     */
-    let healthy = 1; //healthy by default
+    let healthy = 0; // not healthy by default
     // let ContrName = 1; //controller number
     let ch_val = 0;
     let ch_sp1_val = 0;
@@ -123,64 +125,82 @@ class SensorLarge extends React.Component {
     if (this.props.lastData[0] != null) { // if there exist data
       //switch on states
       // current state
-      // debugger;
       if (!healthy) {
-        sensorState = "NotHealthy";
+        sensorState = "nothealthysensor";
       }
       else if (ch_rawVal == 32771) {
-        sensorState = "ChannelClosed";
+        sensorState = "chclosed"; // change text of sensor 
       }
       else if (ch_f) {
-        sensorState = "ChannelFault";
+        sensorState = "chfault";
       }
       else {
         if (ch_sp1) {
-          sensorState = "ChannelSP1";
+          sensorState = "sp1";
         }
         if (ch_sp2) {
-          sensorState = "ChannelSP2";
+          sensorState = "sp2";
         }
       }
       // if no errors happend before and sensorstate empty, everything ok
       if (sensorState == null) {
-        sensorState = "OK";
+        sensorState = "ok";
       }
     }
     else {
-      sensorState = "NoData";
+      sensorState = "nodata"; // no code for this for now...
     }
-    console.log(sensorState, id_controller, channel);
+    // use classnames library to concateneate classes for managin look of current sensor state
+    let stateClasses = classNames({
+      nothealthysensor: sensorState == "nothealthysensor",
+      chfault: sensorState == "chfault",
+      sp2: sensorState == "sp2",
+      sp1: sensorState == "sp1"
+    });
+
 
     return (
-      <div className="row sensor-block ">
-        <div className="sensor-large pull-left">
-          <Row>
-            <Col xs={4} className="sensor-value">
-              <Row>{ch_val}</Row>
-              <Row>
-                <div className="controller-channel">K{id_controller}-{channel}</div>
-              </Row>
-            </Col>
-            <div className="units col-xs-3">{data_type}</div>
-            <div className="col-xs-5">
-              <div className="row row-alarms">
-                <div className="col-xs-12 text-right">
-                  <span className="alarm1-value">{ch_sp1_val}</span>
-                  <span className="alarm1-direction">{ch_sp1_a ? '↓' : '↑'}</span></div>
+      // <Card>
+        
+        {/*<CardBlock>
+          <CardTitle>Card title</CardTitle>
+          <CardSubtitle>Card subtitle</CardSubtitle>
+          <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText>
+          <Button>Button</Button>
+        </CardBlock>*/}
+        <div className="row sensor-block ">
+        <div className="sensor-large pull-left "   >
+          <div className={stateClasses}>
+            <Row>
+              <Col xs={4} className="sensor-value">
+                <Row>{ch_val}</Row>
+                <Row>
+                  <div className="controller-channel">K{id_controller}-{channel}</div>
+                </Row>
+              </Col>
+              <div className="units col-xs-3">{data_type}</div>
+              <div className="col-xs-5">
+                <div className="row row-alarms">
+                  <div className="col-xs-12 text-right">
+                    <span className="alarm1-value">{ch_sp1_val}</span>
+                    <span className="alarm1-direction">{ch_sp1_a ? '↓' : '↑'}</span></div>
+                </div>
+                <div className="row row-alarms">
+                  <div className="col-xs-12 text-right">
+                    <span className="alarm2-value">{ch_sp2_val}</span>
+                    <span className="alarm2-direction">{ch_sp2_a ? '↓' : '↑'}</span></div>
+                </div>
               </div>
-              <div className="row row-alarms">
-                <div className="col-xs-12 text-right">
-                  <span className="alarm2-value">{ch_sp2_val}</span>
-                  <span className="alarm2-direction">{ch_sp2_a ? '↓' : '↑'}</span></div>
-              </div>
-            </div>
-          </Row>
-          <Row>
-            <div className="sensor-type  col-xs-12">{prefix_long}</div>
-          </Row>
+            </Row>
+            <Row>
+              <div className="sensor-type  col-xs-12">{prefix_long}</div>
+            </Row>
+          </div>
         </div>
         <p >{sensor_description}</p>
       </div>
+      {/*</Card>*/}
+      
 
     );
   }

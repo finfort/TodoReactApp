@@ -5,6 +5,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 // import { composeWithDevTools } from 'remote-redux-devtools';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 import requireAuth from './components/require_authentication';
 import App from './components/app';
 import HomePage from './components/homePage';

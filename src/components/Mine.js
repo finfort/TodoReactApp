@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';// eslint-disable-line
 
 import { browserHistory } from 'react-router';
 
-import { Glyphicon } from 'react-bootstrap';
-
 import SensorLarge from './SensorLarge';
 import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
+
+import { CardDeck } from 'reactstrap';
+// import { Card, Button, CardImg, CardTitle, CardText, CardDeck,
+//  CardSubtitle, CardBlock } from 'reactstrap';
 
 class Mine extends Component {
     constructor(props, context) {
@@ -30,7 +32,7 @@ class Mine extends Component {
     // https://jsfiddle.net/STHayden/2pncoLb5/
     // https://react-bootstrap.github.io/components.html
 
-    getLastDataForSensor(controller, channel){
+    getLastDataForSensor(controller, channel) {
         this.state.lastData;
     }
     generateScreen() {
@@ -49,7 +51,7 @@ class Mine extends Component {
 
             //     }
             // // }
-            
+
             // let lastData = getLastDataForSensor(sensor.id_controller, sensor.channel);
 
             return (
@@ -61,7 +63,7 @@ class Mine extends Component {
                     channel={sensor.channel}
                     sensor_description={sensor.sensor_description}
                     lastData={this.state.lastData}
-                    />
+                />
             );
         });
     }
@@ -96,16 +98,22 @@ class Mine extends Component {
 
     render() {
         let sensors = this.generateScreen();
+        // debugger;
         return (
             <div>
-                <button onClick={browserHistory.goBack} bsSize="xsmall">
-                    <Glyphicon glyph="circle-arrow-left" />
+                <button onClick={browserHistory.goBack} >
                     Назад
                 </button>
                 <h2>{this.state.mine.mineName}</h2>
-                {
-                    sensors
-                }
+                <div className="sensors-container">
+                    <CardDeck>
+                        {
+                            sensors
+                        }
+                    </CardDeck>
+
+
+                </div>
 
             </div>
         );

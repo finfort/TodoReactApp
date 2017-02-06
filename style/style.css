@@ -15,6 +15,7 @@
     font-size: large;
     width: 200px;
     border-radius: 5px;
+    
 }
 
 .sensor-value{
@@ -68,6 +69,7 @@
     animation-name: sp2;
     animation-iteration-count: infinite;
     animation-direction: normal;
+    border-radius: inherit;
 }
 @-webkit-keyframes sp2 {
    from { background-color: red; }
@@ -91,5 +93,16 @@
  }
 
  .sp1{
+    background-color: yellow;
+    border-radius: inherit;
+}
 
+.chfault{
+     background-color: #337ab7; 
+     border-radius: inherit;
+}
+
+.nothealthysensor{
+     background-color: gray; 
+     border-radius: inherit;
 }
