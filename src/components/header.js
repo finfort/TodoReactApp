@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
-import { Link, location } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions';
 
-import { Navbar, Nav, NavDropdown, MenuItem, NavItem } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 class Header extends Component {
+    constructor(props) {
+        super(props);
+
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            isOpen: false
+        };
+    }
+    toggle() {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
     authLink() {
         if (this.props.authenticated) {
             return (
@@ -17,42 +30,43 @@ class Header extends Component {
             );
         } else {
             return [
-                <LinkContainer to='signin' key={1}>
-                    <NavItem eventKey={4} >Sign in</NavItem>
-                </LinkContainer>,
-                <LinkContainer to='signup' key={2}>
-                    <NavItem eventKey={5} >Sign up</NavItem>
-                </LinkContainer>
+                <NavItem key={1}>
+                    <NavLink tag={Link} className="nav-link" to="/signin/" activeClassName="active">Sign in</NavLink>
+                </NavItem>,
+                <NavItem key={2}>
+                    <NavLink tag={Link} className="nav-link" to="/signup/" activeClassName="active">Sign up</NavLink>
+
+                </NavItem>
             ];
         }
     }
 
     render() {
         return (
-            <Navbar>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <Link to="/">Home</Link>
-                    </Navbar.Brand>
-                </Navbar.Header>
-                <Nav>
-
-                    <LinkContainer to='/todo'>
-                        <NavItem eventKey={2} >Todo</NavItem>
-                    </LinkContainer>
-                    <LinkContainer to='/users' >
-                        <NavItem eventKey={3} >Users</NavItem>
-                    </LinkContainer>
-                    <LinkContainer to='/resources' >
-                        <NavItem eventKey={1} >Resources</NavItem>
-                    </LinkContainer>
-
-                    {
-                        this.authLink()
-                    }
-
-                </Nav>
-            </Navbar>
+            <div>
+                <Navbar color="faded" light toggleable>
+                    <NavbarToggler right onClick={this.toggle} />
+                    <NavbarBrand>
+                        <NavLink tag={Link} to="/">
+                            ЦЕНТР
+                    </NavLink>
+                    </NavbarBrand>
+                    <Collapse isOpen={this.state.isOpen} navbar>
+                        <Nav className="ml-auto" navbar>
+                            <NavItem>
+                                <NavLink tag={Link} className="nav-link" to="/todo" activeClassName="active">Todo</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} className="nav-link" to="/users" activeClassName="active">users</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} className="nav-link" to="/resources" activeClassName="active">resources</NavLink>
+                            </NavItem>
+                            {this.authLink()}
+                        </Nav>
+                    </Collapse>
+                </Navbar>
+            </div>
         );
     }
 }

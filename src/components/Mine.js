@@ -82,7 +82,7 @@ class Mine extends Component {
         //     })
         this.setState({
             lastData: Data.lastData
-        })
+        });
         //should this be state? set it and access to it from sensor large child component to update by itself
 
     }
