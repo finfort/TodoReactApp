@@ -35,7 +35,6 @@ class Header extends Component {
                 </NavItem>,
                 <NavItem key={2}>
                     <NavLink tag={Link} className="nav-link" to="/signup/" activeClassName="active">Sign up</NavLink>
-
                 </NavItem>
             ];
         }
@@ -43,30 +42,26 @@ class Header extends Component {
 
     render() {
         return (
-            <div>
-                <Navbar color="faded" light toggleable>
-                    <NavbarToggler right onClick={this.toggle} />
-                    <NavbarBrand>
-                        <NavLink tag={Link} to="/">
-                            ЦЕНТР
-                    </NavLink>
+            <Navbar color="faded" light toggleable fixed="top">
+                <NavbarToggler right onClick={this.toggle} />
+                <NavbarBrand tag={Link} to="/">
+                    ЦЕНТР
                     </NavbarBrand>
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink tag={Link} className="nav-link" to="/todo" activeClassName="active">Todo</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} className="nav-link" to="/users" activeClassName="active">users</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} className="nav-link" to="/resources" activeClassName="active">resources</NavLink>
-                            </NavItem>
-                            {this.authLink()}
-                        </Nav>
-                    </Collapse>
-                </Navbar>
-            </div>
+                <Collapse isOpen={this.state.isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink tag={Link} className="nav-link" to="/todo" activeClassName="active">Todo</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} className="nav-link" to="/users" activeClassName="active">users</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} className="nav-link" to="/resources" activeClassName="active">resources</NavLink>
+                        </NavItem>
+                        {this.authLink()}
+                    </Nav>
+                </Collapse>
+            </Navbar>
         );
     }
 }

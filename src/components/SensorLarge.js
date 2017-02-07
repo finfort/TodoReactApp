@@ -162,20 +162,23 @@ class SensorLarge extends React.Component {
 
 
     return (
-      <Card className="centered-sensors">
-
-        <div className="sensor-large ">
+      
+      <Card className="centered-sensors" >
+        <span className="anchor" id={"K"+id_controller+"-"+channel}></span>
+        <div className="sensor-large" >
           <div className={stateClasses}>
             <Container>
-              <Row>
-                <Col xs={4} className="sensor-value">
-                  <Row>{ch_val}</Row>
+              <Row> 
+                <Col xs={4}>
+                  <Row className="mx-auto">
+                    <div className="sensor-value ">{ch_val}</div>
+                  </Row>
                   <Row>
                     <div className="controller-channel">K{id_controller}-{channel}</div>
                   </Row>
                 </Col>
-                <Col xs={3} className="units">{data_type}</Col>
-                <Col xs={5} >
+                <Col xs={4} className="units">{data_type}</Col>
+                <Col xs={4} >
                   <Row className="row-alarms">
                     <Col xs={12} className="text-right">
                       <span className="alarm1-value">{ch_sp1_val}</span>
@@ -197,13 +200,8 @@ class SensorLarge extends React.Component {
           </div>
         </div>
 
-          <CardText>{sensor_description}</CardText>
+        <CardText>{sensor_description}</CardText>
 
-
-        {/*<Row className="sensor-block ">
-
-          <p>{sensor_description}</p>
-        </Row>*/}
       </Card>
 
     );

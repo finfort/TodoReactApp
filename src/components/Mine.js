@@ -8,15 +8,14 @@ import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
 
 // import { CardDeck } from 'reactstrap';
- import { Card, Button, CardImg, CardTitle, CardText, CardDeck,
-  CardSubtitle, CardBlock, CardGroup } from 'reactstrap';
+import { CardDeck, Container } from 'reactstrap';
 
 class Mine extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
             lastData: {}
-        }
+        };
     }
 
     // when users goes from MinesList get info from route which mine selected, or grub info from props
@@ -107,7 +106,7 @@ class Mine extends Component {
                 <h2>{this.state.mine.mineName}</h2>
                 <div className="sensors-container">
                     <CardDeck>
-                        
+
                         {
                             sensors
                         }
@@ -115,7 +114,15 @@ class Mine extends Component {
 
 
                 </div>
-
+                {/*footer*/}
+                <footer className="footer fixed-bottom">
+                    <Container fluid>
+                        <a href="#K1-1">click me</a>
+                        <span className="text-muted">
+                            Lorem ipsum dolor sit amet, ptatibus ea aperiam dolorum! 
+                        </span>
+                    </Container>
+                </footer>
             </div>
         );
     }
