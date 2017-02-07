@@ -117,10 +117,66 @@ class Mine extends Component {
                 {/*footer*/}
                 <footer className="footer fixed-bottom">
                     <Container fluid>
-                        <a href="#K1-1">click me</a>
-                        <span className="text-muted">
-                            Lorem ipsum dolor sit amet, ptatibus ea aperiam dolorum! 
-                        </span>
+
+                        <div className="warning-list">
+                            <div className="warning-item">
+                                <a href="#K1-1">Ch4 2%</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">Ch4 2%</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">Ch4 2%</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">Ch4 2%</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K1-1">CO 20 ppm</a>
+                            </div>
+                        </div>
                     </Container>
                 </footer>
             </div>
