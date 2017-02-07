@@ -7,9 +7,9 @@ import SensorLarge from './SensorLarge';
 import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
 
-import { CardDeck } from 'reactstrap';
-// import { Card, Button, CardImg, CardTitle, CardText, CardDeck,
-//  CardSubtitle, CardBlock } from 'reactstrap';
+// import { CardDeck } from 'reactstrap';
+ import { Card, Button, CardImg, CardTitle, CardText, CardDeck,
+  CardSubtitle, CardBlock, CardGroup } from 'reactstrap';
 
 class Mine extends Component {
     constructor(props, context) {
@@ -107,6 +107,7 @@ class Mine extends Component {
                 <h2>{this.state.mine.mineName}</h2>
                 <div className="sensors-container">
                     <CardDeck>
+                        
                         {
                             sensors
                         }

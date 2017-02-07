@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';// eslint-disable-line
 import classNames from 'classnames';
-import { Card, CardImg, CardText, CardBlock,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import {
+  Card, CardImg, CardText, CardBlock,
+  CardTitle, CardSubtitle, Button, Row, Col, Container
+} from 'reactstrap';
 
 class SensorLarge extends React.Component {
   constructor(props) {
@@ -160,47 +162,49 @@ class SensorLarge extends React.Component {
 
 
     return (
-      // <Card>
-        
-        {/*<CardBlock>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText>
-          <Button>Button</Button>
-        </CardBlock>*/}
-        <div className="row sensor-block ">
-        <div className="sensor-large pull-left "   >
+      <Card className="centered-sensors">
+
+        <div className="sensor-large ">
           <div className={stateClasses}>
+            <Container>
+              <Row>
+                <Col xs={4} className="sensor-value">
+                  <Row>{ch_val}</Row>
+                  <Row>
+                    <div className="controller-channel">K{id_controller}-{channel}</div>
+                  </Row>
+                </Col>
+                <Col xs={3} className="units">{data_type}</Col>
+                <Col xs={5} >
+                  <Row className="row-alarms">
+                    <Col xs={12} className="text-right">
+                      <span className="alarm1-value">{ch_sp1_val}</span>
+                      <span className="alarm1-direction">{ch_sp1_a ? '↓' : '↑'}</span>
+                    </Col>
+                  </Row>
+                  <Row className="row-alarms">
+                    <Col xs={12} className="text-right">
+                      <span className="alarm2-value">{ch_sp2_val}</span>
+                      <span className="alarm2-direction">{ch_sp2_a ? '↓' : '↑'}</span>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
             <Row>
-              <Col xs={4} className="sensor-value">
-                <Row>{ch_val}</Row>
-                <Row>
-                  <div className="controller-channel">K{id_controller}-{channel}</div>
-                </Row>
-              </Col>
-              <div className="units col-xs-3">{data_type}</div>
-              <div className="col-xs-5">
-                <div className="row row-alarms">
-                  <div className="col-xs-12 text-right">
-                    <span className="alarm1-value">{ch_sp1_val}</span>
-                    <span className="alarm1-direction">{ch_sp1_a ? '↓' : '↑'}</span></div>
-                </div>
-                <div className="row row-alarms">
-                  <div className="col-xs-12 text-right">
-                    <span className="alarm2-value">{ch_sp2_val}</span>
-                    <span className="alarm2-direction">{ch_sp2_a ? '↓' : '↑'}</span></div>
-                </div>
-              </div>
-            </Row>
-            <Row>
-              <div className="sensor-type  col-xs-12">{prefix_long}</div>
+              <Col xs={12} className="sensor-type">{prefix_long}</Col>
             </Row>
           </div>
         </div>
-        <p >{sensor_description}</p>
-      </div>
-      {/*</Card>*/}
-      
+
+          <CardText>{sensor_description}</CardText>
+
+
+        {/*<Row className="sensor-block ">
+
+          <p>{sensor_description}</p>
+        </Row>*/}
+      </Card>
 
     );
   }
