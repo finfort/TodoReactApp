@@ -38,15 +38,15 @@ exports.signup = function (req, res, next) {
         user.save(function (err) { //save user to mongo and recieve callback when its done 
             if (err) next(err);
             res.json({ token: tokenForUser(user) });
-        })
+        });
 
 
     });
 
-}
+};
 
 exports.signin = function (req, res, next) {
     //user has already had their email and password authorized
     //give them their token
     res.send({ token: tokenForUser(req.user) });
-}
+};

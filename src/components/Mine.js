@@ -8,22 +8,29 @@ import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
 
 // import { CardDeck } from 'reactstrap';
+import axios from 'axios';
 import { CardDeck, Container } from 'reactstrap';
+
+const ROOT_URL = 'http://localhost:3090'; // api url
 
 class Mine extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
+            mineName: '',
+            sensors: [],
             lastData: {}
         };
     }
 
     // when users goes from MinesList get info from route which mine selected, or grub info from props
     componentWillMount() {
+        console.log("component will mount");
         this.setState({
             // route components are rendered with useful information, like URL params
-            mine: Helper.findMinebyId(this.props.params.mineId)
+            mineName: Helper.findMinebyId(this.props.params.mineId),
         });
+        this.generateScreen();
     }
     //try to use fabric.js over here
     // https://github.com/liuhong1happy/react-raphael
@@ -31,27 +38,29 @@ class Mine extends Component {
     // https://jsfiddle.net/STHayden/2pncoLb5/
     // https://react-bootstrap.github.io/components.html
 
-    getLastDataForSensor(controller, channel) {
-        this.state.lastData;
-    }
+    // getLastDataForSensor(controller, channel) {
+    //     this.state.lastData;
+    // }
     generateScreen() {
+        console.log("generateScreen");
+        axios.get(`${ROOT_URL}/getSensorsData`) //es6 String Substitution
+            .then(response => {
+                // console.log(" generateScreen getSensorsData", response);
+                let sensorsData = response.data[0];
 
+                this.setState({
+                    sensors: sensorsData
+                });
+                console.log("generateScreen state", sensorsData);
 
-        return Data.sensorsDescription.map((sensor, index) => {
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        //static content generation
+        /*return Data.sensorsDescription.map((sensor, index) => {
             //filter on дискретный
             if (sensor.data_type == "дискретный") return;
-
-            //filter lastData from One controller and pass it to Sensor
-            // // if (!lastDataOfOneController) {// run this just once
-            //     for (let i = 0; i < this.state.lastData.length; i++) {
-            //         if (this.state.lastData[i].ContrName)
-            //             if (this.state.lastData[i].ContrName == sensor.id_controller)
-            //                 lastDataOfOneController = this.state.lastData[i]
-
-            //     }
-            // // }
-
-            // let lastData = getLastDataForSensor(sensor.id_controller, sensor.channel);
 
             return (
                 <SensorLarge key={sensor.id_sensor}
@@ -64,7 +73,7 @@ class Mine extends Component {
                     lastData={this.state.lastData}
                 />
             );
-        });
+        });*/
     }
     // When component rendered updated their data
     // Mine should subscribe to recieve data from server
@@ -72,16 +81,22 @@ class Mine extends Component {
         //make request to server with axios
         // or get dummy data from Data.lastData
         //     this.serverRequest = 
-        //   axios
-        //     .get("http://codepen.io/jobs.json")
-        //     .then(function(result) {    
-        //       _this.setState({
-        //         jobs: result.data.jobs
-        //       });
-        //     })
-        this.setState({
-            lastData: Data.lastData
-        });
+        console.log("DidMount");
+        axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
+            .then(response => {
+
+                this.setState({
+                    lastData: response.data[0]
+                });
+                console.log("getLastData", response.data[0]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        //set static last data
+        // this.setState({
+        //     lastData: Data.lastData
+        // });
         //should this be state? set it and access to it from sensor large child component to update by itself
 
     }
@@ -96,26 +111,41 @@ class Mine extends Component {
     }
 
     render() {
-        let sensors = this.generateScreen();
+        console.log("render");
+        // let sensors = this.state.sensors;
         // debugger;
         return (
             <div>
                 <button onClick={browserHistory.goBack} >
                     Назад
                 </button>
-                <h2>{this.state.mine.mineName}</h2>
+                <h2>{this.state.mineName.mine}</h2>
                 <div className="sensors-container">
                     <CardDeck>
-
                         {
-                            sensors
+                            this.state.sensors.map((sensor) => {
+                                //filter on дискретный
+                                {/*debugger;*/ }
+
+                                if (sensor.data_type == "дискретный") return;
+
+                                return (<SensorLarge key={sensor.id_sensor}
+                                    id_sensor={sensor.id_sensor}
+                                    prefix_long={sensor.prefix_long}
+                                    data_type={sensor.data_type}
+                                    id_controller={sensor.id_controller}
+                                    channel={sensor.channel}
+                                    sensor_description={sensor.sensor_description}
+                                    lastData={this.state.lastData}
+                                />);
+                            })
                         }
                     </CardDeck>
 
 
                 </div>
                 {/*footer*/}
-                <footer className="footer fixed-bottom">
+                {/*<footer className="footer fixed-bottom">
                     <Container fluid>
 
                         <div className="warning-list">
@@ -178,7 +208,7 @@ class Mine extends Component {
                             </div>
                         </div>
                     </Container>
-                </footer>
+                </footer>*/}
             </div>
         );
     }
