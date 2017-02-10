@@ -31,6 +31,18 @@ class Mine extends Component {
             mineName: Helper.findMinebyId(this.props.params.mineId),
         });
         this.generateScreen();
+
+         axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
+            .then(response => {
+
+                this.setState({
+                    lastData: response.data[0]
+                });
+                console.log("getLastData", response.data[0]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
     //try to use fabric.js over here
     // https://github.com/liuhong1happy/react-raphael
@@ -82,17 +94,7 @@ class Mine extends Component {
         // or get dummy data from Data.lastData
         //     this.serverRequest = 
         console.log("DidMount");
-        axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
-            .then(response => {
-
-                this.setState({
-                    lastData: response.data[0]
-                });
-                console.log("getLastData", response.data[0]);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+       
         //set static last data
         // this.setState({
         //     lastData: Data.lastData

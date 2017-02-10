@@ -1,8 +1,8 @@
 const Authentication = require('./controllers/authentication');
 const passportService = require('./services/passport');
 const passport = require('passport');
-const getSensorsData = require('./controllers/getSensorsData');
-const getLastData = require('./controllers/getLastData');
+const sqlData = require('./controllers/getSensorsData');
+// const getLastData = require('./controllers/getLastData');
 
 //require to use passwport a jwt strategy for web app and disable session
 const requireAuth = passport.authenticate('jwt', { session: false }); // make protected route by use of jwt toket
@@ -25,7 +25,10 @@ module.exports = function (app) {
     //     });
     //     // res.send({ message: 'getSensorsData' });        
     // });
-    app.get('/getSensorsData', getSensorsData.getSensorsData);
-
-    app.get('/getLastData', getLastData.getLastData); // return 
+    app.get('/getSensorsData', function (req, res) {
+        sqlData.getData(res, 'GetSensors');
+    }); 
+    app.get('/getLastData', function (req, res) {
+        sqlData.getData(res,'GetLastData');
+    }); // return 
 };

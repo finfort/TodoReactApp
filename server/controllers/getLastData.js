@@ -1,14 +1,14 @@
 const sql = require('mssql');
-const config = require('../services/dbConfig');
+// const config = require('../services/dbConfig');
 
-exports.getLastData = function (req, res, next) {
+exports.getLastData = function ( res, procedure) {
     // export this connection string to config file
-    // var config = "mssql://center:1@SRV/svod_db";
+    var config = "mssql://center:1@SRV/svod_db";
 
     sql.connect(config).then(function () {
         // Stored Procedure 
         new sql.Request()
-            .execute('GetLastData').then(function (recordsets) {
+            .execute(procedure).then(function (recordsets) {
                 return res.json(recordsets);
             }).catch(function (err) {
                 // ... error checks 
@@ -16,9 +16,11 @@ exports.getLastData = function (req, res, next) {
             });
     }).catch(function (err) {
         // ... error checks 
-                debugger;
+        // debugger;
 
         console.log(err);
+        res.send(err);
+
 
     });
 
