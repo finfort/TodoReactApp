@@ -27,8 +27,13 @@ module.exports = function (app) {
     // });
     app.get('/getSensorsData', function (req, res) {
         sqlData.getData(res, 'GetSensors');
-    }); 
+    });
     app.get('/getLastData', function (req, res) {
-        sqlData.getData(res,'GetLastData');
+        // function sendEmail() {
+        //     email.send(to, headers, body);
+        //     setTimeout(sendEmail, 10 * 1000);
+        // }
+        // setTimeout(sendEmail, 10 * 1000);
+        sqlData.getData(res, 'GetLastData');
     }); // return 
 };

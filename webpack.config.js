@@ -3,14 +3,11 @@ var webpack = require('webpack');
 /* eslint-disable */
 module.exports = {
   filename: __filename,
-  // debug: true,
   devtool: 'source-map',
 
   entry: [
     'webpack-dev-server/client?http://localhost:8080', // WebpackDevServer host and port
-    'webpack/hot/dev-server', // "only" prevents reload on syntax errors
-    // 'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
-    // 'webpack-hot-middleware/client',
+    // 'webpack/hot/dev-server', // "only" prevents reload on syntax errors
     './src/index.js'
   ],
   output: {
@@ -19,9 +16,9 @@ module.exports = {
     pathinfo: true,
     filename: 'bundle.js'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
+  // plugins: [
+  //   new webpack.HotModuleReplacementPlugin()
+  // ],
   module: {
 
     loaders: [    
@@ -41,7 +38,7 @@ module.exports = {
   },
 
   devServer: {
-    hot: true,//hot 
+    // hot: true,//hot 
     historyApiFallback: true,
     contentBase: './'
   }

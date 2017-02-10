@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';// eslint-disable-line
 
 import { browserHistory } from 'react-router';
+import io  from 'socket.io-client';
 
 import SensorLarge from './SensorLarge';
 import * as Data from './helpers/Data';
@@ -32,7 +33,7 @@ class Mine extends Component {
         });
         this.generateScreen();
 
-         axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
+        axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
             .then(response => {
 
                 this.setState({
@@ -94,7 +95,8 @@ class Mine extends Component {
         // or get dummy data from Data.lastData
         //     this.serverRequest = 
         console.log("DidMount");
-       
+        this.updateCurrData();
+
         //set static last data
         // this.setState({
         //     lastData: Data.lastData
@@ -109,13 +111,15 @@ class Mine extends Component {
     }
 
     updateCurrData() {
-
+        var socket = io("http://localhost:3090"); // change to real ip
+        socket.on('news', (data) => {
+            console.log(data);
+            // socket.emit('my other event', { my: 'data' });
+        });
     }
 
     render() {
         console.log("render");
-        // let sensors = this.state.sensors;
-        // debugger;
         return (
             <div>
                 <button onClick={browserHistory.goBack} >
@@ -127,10 +131,7 @@ class Mine extends Component {
                         {
                             this.state.sensors.map((sensor) => {
                                 //filter on дискретный
-                                {/*debugger;*/ }
-
                                 if (sensor.data_type == "дискретный") return;
-
                                 return (<SensorLarge key={sensor.id_sensor}
                                     id_sensor={sensor.id_sensor}
                                     prefix_long={sensor.prefix_long}
