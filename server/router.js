@@ -16,24 +16,11 @@ module.exports = function (app) {
     app.post('/signup', Authentication.signup); // how to sign in after this action?
 
     // TODO return to authorized user
-    // app.get('/getSensorsData', function (req, res) {
-    //     // res.send( console.log(res) );
-    //     getSensorsData.getSensorsData((err, content)=>{
-    //         if(!err){
-    //             res.send(content);
-    //         }
-    //     });
-    //     // res.send({ message: 'getSensorsData' });        
-    // });
     app.get('/getSensorsData', function (req, res) {
         sqlData.getData(res, 'GetSensors');
     });
     app.get('/getLastData', function (req, res) {
-        // function sendEmail() {
-        //     email.send(to, headers, body);
-        //     setTimeout(sendEmail, 10 * 1000);
-        // }
-        // setTimeout(sendEmail, 10 * 1000);
         sqlData.getData(res, 'GetLastData');
-    }); // return 
+    }); 
+   
 };

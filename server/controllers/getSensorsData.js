@@ -11,10 +11,7 @@ exports.getData = function (res, procedure) {
         // Stored Procedure 
         new sql.Request(dbConn)
             .execute(procedure).then(function (recordsets) {
-                if(res)
                     return res.json(recordsets);
-                if(!res)
-                    return recordsets;
             }).catch(function (err) {
                 // ... error checks 
                 console.log("err execute",err);
@@ -28,7 +25,7 @@ exports.getData = function (res, procedure) {
 
 };
 
-exports.getDatawoRes = function (procedure) {
+exports.getDatawoRes = function (res, procedure) {
     // export this connection string to config file
     var config = "mssql://center:1@SRV/svod_db";
     var dbConn = new sql.Connection(config);
@@ -40,7 +37,7 @@ exports.getDatawoRes = function (procedure) {
             .execute(procedure).then(function (recordsets) {
                 // debugger;
                 console.log("return data");
-                    return recordsets;
+                    return res.json(recordsets);
             }).catch(function (err) {
                 // ... error checks 
                 console.log("err execute",err);

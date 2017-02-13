@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';// eslint-disable-line
 
 import { browserHistory } from 'react-router';
-import io  from 'socket.io-client';
 
 import SensorLarge from './SensorLarge';
 import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
 
-// import { CardDeck } from 'reactstrap';
 import axios from 'axios';
 import { CardDeck, Container } from 'reactstrap';
 
@@ -20,7 +18,8 @@ class Mine extends Component {
         this.state = {
             mineName: '',
             sensors: [],
-            lastData: {}
+            lastData: {},
+            timeoutId: ''
         };
     }
 
@@ -33,13 +32,17 @@ class Mine extends Component {
         });
         this.generateScreen();
 
+        this.fetchLastData();
+    }
+    fetchLastData() {
+        console.log("start fetching lastData");
         axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
             .then(response => {
 
                 this.setState({
                     lastData: response.data[0]
                 });
-                console.log("getLastData", response.data[0]);
+                console.log("fetched LastData", response.data[0]);
             })
             .catch((err) => {
                 console.log(err);
@@ -108,14 +111,21 @@ class Mine extends Component {
     // On unmount component abourt request to server
     componentWillUnmount() {
         //this.serverRequest.abort();
+        console.log("unmount clear everything");
+        clearTimeout(this.state.timeoutId);
+
+        // TODO abort requests to server
     }
 
+
     updateCurrData() {
-        var socket = io("http://localhost:3090"); // change to real ip
-        socket.on('news', (data) => {
-            console.log(data);
-            // socket.emit('my other event', { my: 'data' });
-        });
+        function fetchLastDataByTimer() {
+            this.fetchLastData();
+            const timeoutId = setTimeout(fetchLastDataByTimer.bind(this), 10 * 1000);
+            this.setState({ timeoutId: timeoutId });
+        }
+        setTimeout(fetchLastDataByTimer.bind(this), 10 * 1000); //don't care about this timer id...
+
     }
 
     render() {
@@ -216,6 +226,7 @@ class Mine extends Component {
         );
     }
 }
+
 
 export default Mine;
 
