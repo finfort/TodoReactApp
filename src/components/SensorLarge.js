@@ -81,7 +81,12 @@ class SensorLarge extends React.Component {
 
     //check if object lastData contains ch_val and other fields
     //go for current controller row in lastData
-    
+   
+    // if(this.props.lastData != null){
+    //   console.log("there no last data");
+    //   return;
+    // }
+      
     if (this.props.lastData[0] != null) { // if there exist data
       this.props.lastData.map((controllerRow) => {
         if (controllerRow['ContrName'] == id_controller) {
@@ -112,6 +117,7 @@ class SensorLarge extends React.Component {
         }
       });
     }
+
     //check if no data on last data show connection error with database
     // debugger
     let sensorState;

@@ -8,7 +8,7 @@ import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
 
 import axios from 'axios';
-import { CardDeck, Container } from 'reactstrap';
+import { CardDeck, Container, Alert } from 'reactstrap';
 
 const ROOT_URL = 'http://localhost:3090'; // api url
 
@@ -19,7 +19,8 @@ class Mine extends Component {
             mineName: '',
             sensors: [],
             lastData: {},
-            timeoutId: ''
+            timeoutId: '',
+            errorMessage: ''
         };
     }
 
@@ -30,7 +31,7 @@ class Mine extends Component {
             // route components are rendered with useful information, like URL params
             mineName: Helper.findMinebyId(this.props.params.mineId),
         });
-        this.generateScreen();
+        this.fetchSensorsData();
 
         this.fetchLastData();
     }
@@ -38,7 +39,10 @@ class Mine extends Component {
         console.log("start fetching lastData");
         axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
             .then(response => {
-
+                //clean error message
+                this.setState({
+                    errorMessage: ''
+                });
                 this.setState({
                     lastData: response.data[0]
                 });
@@ -46,6 +50,9 @@ class Mine extends Component {
             })
             .catch((err) => {
                 console.log(err);
+                this.setState({
+                    errorMessage: err
+                });
             });
     }
     //try to use fabric.js over here
@@ -57,18 +64,16 @@ class Mine extends Component {
     // getLastDataForSensor(controller, channel) {
     //     this.state.lastData;
     // }
-    generateScreen() {
-        console.log("generateScreen");
+    fetchSensorsData() {
+        console.log("fetchSensorsData");
         axios.get(`${ROOT_URL}/getSensorsData`) //es6 String Substitution
             .then(response => {
                 // console.log(" generateScreen getSensorsData", response);
                 let sensorsData = response.data[0];
-
                 this.setState({
                     sensors: sensorsData
                 });
-                console.log("generateScreen state", sensorsData);
-
+                // console.log("fetchSensorsData state", sensorsData);
             })
             .catch((err) => {
                 console.log(err);
@@ -91,19 +96,15 @@ class Mine extends Component {
             );
         });*/
     }
+
+
     // When component rendered updated their data
     // Mine should subscribe to recieve data from server
     componentDidMount() {
         //make request to server with axios
         // or get dummy data from Data.lastData
-        //     this.serverRequest = 
         console.log("DidMount");
         this.updateCurrData();
-
-        //set static last data
-        // this.setState({
-        //     lastData: Data.lastData
-        // });
         //should this be state? set it and access to it from sensor large child component to update by itself
 
     }
@@ -127,33 +128,57 @@ class Mine extends Component {
         setTimeout(fetchLastDataByTimer.bind(this), 10 * 1000); //don't care about this timer id...
 
     }
+    alertFunction() {
+        if (this.state.errorMessage) {
+            return (<Alert color="danger">
+                <strong>Ошибка!</strong> {this.state.errorMessage}
+            </Alert>);
+        }
+    }
+    drawSensors() {
+        if(this.state.sensors == undefined || this.state.sensors.length == 0 ) return; //show that we have no  
+        return (<CardDeck>
+            {
+                this.state.sensors.map((sensor) => {
+                    //filter on дискретный
+                    if (sensor.data_type == "дискретный") return;
+                    return (<SensorLarge key={sensor.id_sensor}
+                        id_sensor={sensor.id_sensor}
+                        prefix_long={sensor.prefix_long}
+                        data_type={sensor.data_type}
+                        id_controller={sensor.id_controller}
+                        channel={sensor.channel}
+                        sensor_description={sensor.sensor_description}
+                        lastData={this.state.lastData}
+                    />);
+                })
+            }
+        </CardDeck>);
+
+    }
+
+    checkif() {
+        if (this.state.errorMessage) {
+            return (<span>vse ok</span>);
+        }
+    }
 
     render() {
         console.log("render");
         return (
             <div>
+                {/*{this.alertFunction()}*/}
+
                 <button onClick={browserHistory.goBack} >
                     Назад
                 </button>
                 <h2>{this.state.mineName.mine}</h2>
                 <div className="sensors-container">
-                    <CardDeck>
-                        {
-                            this.state.sensors.map((sensor) => {
-                                //filter on дискретный
-                                if (sensor.data_type == "дискретный") return;
-                                return (<SensorLarge key={sensor.id_sensor}
-                                    id_sensor={sensor.id_sensor}
-                                    prefix_long={sensor.prefix_long}
-                                    data_type={sensor.data_type}
-                                    id_controller={sensor.id_controller}
-                                    channel={sensor.channel}
-                                    sensor_description={sensor.sensor_description}
-                                    lastData={this.state.lastData}
-                                />);
-                            })
-                        }
-                    </CardDeck>
+
+                    {
+                        this.drawSensors()
+                    }
+
 
 
                 </div>
