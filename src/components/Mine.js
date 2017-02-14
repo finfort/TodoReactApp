@@ -39,10 +39,10 @@ class Mine extends Component {
         console.log("start fetching lastData");
         axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
             .then(response => {
-                //clean error message
-                this.setState({
-                    errorMessage: ''
-                });
+                // //clean error message this calls re render 
+                // this.setState({
+                //     errorMessage: ''
+                // });
                 this.setState({
                     lastData: response.data[0]
                 });
@@ -123,7 +123,7 @@ class Mine extends Component {
         function fetchLastDataByTimer() {
             this.fetchLastData();
             const timeoutId = setTimeout(fetchLastDataByTimer.bind(this), 10 * 1000);
-            this.setState({ timeoutId: timeoutId });
+            // this.setState({ timeoutId: timeoutId });
         }
         setTimeout(fetchLastDataByTimer.bind(this), 10 * 1000); //don't care about this timer id...
 
@@ -136,7 +136,7 @@ class Mine extends Component {
         }
     }
     drawSensors() {
-        if(this.state.sensors == undefined || this.state.sensors.length == 0 ) return; //show that we have no  
+        if (this.state.sensors == undefined || this.state.sensors.length == 0) return; //show that we have no  
         return (<CardDeck>
             {
                 this.state.sensors.map((sensor) => {
@@ -157,21 +157,17 @@ class Mine extends Component {
 
     }
 
-    checkif() {
-        if (this.state.errorMessage) {
-            return (<span>vse ok</span>);
-        }
-    }
 
     render() {
         console.log("render");
+        // debugger;
         return (
-            <div>
+            <div id="wrapper" className="toggled">
                 {/*{this.alertFunction()}*/}
 
-                <button onClick={browserHistory.goBack} >
+                {/*<button onClick={browserHistory.goBack} >
                     Назад
-                </button>
+                </button>*/}
                 <h2>{this.state.mineName.mine}</h2>
                 <div className="sensors-container">
 
@@ -179,9 +175,39 @@ class Mine extends Component {
                         this.drawSensors()
                     }
 
-
-
                 </div>
+               
+                    <div id="sidebar-wrapper">
+                        <ul className="sidebar-nav">
+                            <li className="sidebar-brand">
+                                <a href="#">
+                                    Start Bootstrap
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#">Shortcuts</a>
+                            </li>
+                            <li>
+                                <a href="#">Overview</a>
+                            </li>
+                            <li>
+                                <a href="#">Events</a>
+                            </li>
+                            <li>
+                                <a href="#">About</a>
+                            </li>
+                            <li>
+                                <a href="#">Services</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                
                 {/*footer*/}
                 {/*<footer className="footer fixed-bottom">
                     <Container fluid>

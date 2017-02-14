@@ -40,15 +40,22 @@ class Header extends Component {
         }
     }
 
+    handleToggleClick(){
+
+    }
+
     render() {
         return (
             <Navbar color="faded" light toggleable fixed="top">
                 <NavbarToggler right onClick={this.toggle} />
                 <NavbarBrand tag={Link} to="/">
                     ЦЕНТР
-                    </NavbarBrand>
+                </NavbarBrand>
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={this.handleToggleClick}>Toggle Menu</a>
+                        </NavItem>
                         <NavItem>
                             <NavLink tag={Link} className="nav-link" to="/todo" activeClassName="active">Todo</NavLink>
                         </NavItem>
