@@ -7,14 +7,15 @@ import SensorLarge from './SensorLarge';
 import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
 
+
 import axios from 'axios';
 import { CardDeck, Container, Alert } from 'reactstrap';
 
 const ROOT_URL = 'http://localhost:3090'; // api url
 
 class Mine extends Component {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
         this.state = {
             mineName: '',
             sensors: [],
@@ -22,6 +23,7 @@ class Mine extends Component {
             timeoutId: '',
             errorMessage: ''
         };
+
     }
 
     // when users goes from MinesList get info from route which mine selected, or grub info from props
@@ -126,7 +128,6 @@ class Mine extends Component {
             // this.setState({ timeoutId: timeoutId });
         }
         setTimeout(fetchLastDataByTimer.bind(this), 10 * 1000); //don't care about this timer id...
-
     }
     alertFunction() {
         if (this.state.errorMessage) {
@@ -158,56 +159,30 @@ class Mine extends Component {
     }
 
 
+
     render() {
         console.log("render");
+        // {console.log(this.state.isBurgerOpen);}
         // debugger;
         return (
-            <div id="wrapper" className="toggled">
+            <div >
                 {/*{this.alertFunction()}*/}
 
                 {/*<button onClick={browserHistory.goBack} >
                     Назад
                 </button>*/}
-                <h2>{this.state.mineName.mine}</h2>
-                <div className="sensors-container">
-
-                    {
-                        this.drawSensors()
-                    }
-
-                </div>
-               
-                    <div id="sidebar-wrapper">
-                        <ul className="sidebar-nav">
-                            <li className="sidebar-brand">
-                                <a href="#">
-                                    Start Bootstrap
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="#">Shortcuts</a>
-                            </li>
-                            <li>
-                                <a href="#">Overview</a>
-                            </li>
-                            <li>
-                                <a href="#">Events</a>
-                            </li>
-                            <li>
-                                <a href="#">About</a>
-                            </li>
-                            <li>
-                                <a href="#">Services</a>
-                            </li>
-                            <li>
-                                <a href="#">Contact</a>
-                            </li>
-                        </ul>
+                 
+                <div >
+                    <h2>{this.state.mineName.association} {this.state.mineName.mineName}</h2>
+                    <div className="sensors-container">
+                        {
+                            this.drawSensors()
+                        }
                     </div>
+                </div>
+
                 
+
                 {/*footer*/}
                 {/*<footer className="footer fixed-bottom">
                     <Container fluid>
