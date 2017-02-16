@@ -172,6 +172,9 @@ body {
   right: 0px;
   top: 55px;
 }
+.bm-cross-button{
+    right: 12px !important;
+}
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {

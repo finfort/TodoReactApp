@@ -18,7 +18,7 @@ class Mine extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mineName: '',
+            mine: '',
             sensors: [],
             lastData: {},
             timeoutId: '',
@@ -32,14 +32,14 @@ class Mine extends Component {
         console.log("component will mount");
         this.setState({
             // route components are rendered with useful information, like URL params
-            mineName: Helper.findMinebyId(this.props.params.mineId),
+            mine: Helper.findMinebyId(this.props.params.mineId),
         });
         this.fetchSensorsData();
 
         this.fetchLastData();
     }
     fetchLastData() {
-        console.log("start fetching lastData");
+        // console.log("start fetching lastData");
         axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
             .then(response => {
                 // //clean error message this calls re render 
@@ -49,7 +49,7 @@ class Mine extends Component {
                 this.setState({
                     lastData: response.data[0]
                 });
-                console.log("fetched LastData", response.data[0]);
+                console.log("fetched LastData");
             })
             .catch((err) => {
                 console.log(err);
@@ -115,7 +115,7 @@ class Mine extends Component {
     // On unmount component abourt request to server
     componentWillUnmount() {
         //this.serverRequest.abort();
-        console.log("unmount clear everything");
+        console.log("unmount clear everything", this.state.timeoutId);
         clearTimeout(this.state.timeoutId);
 
         // TODO abort requests to server
@@ -123,12 +123,16 @@ class Mine extends Component {
 
 
     updateCurrData() {
+        let seconds = 10;
         function fetchLastDataByTimer() {
             this.fetchLastData();
-            const timeoutId = setTimeout(fetchLastDataByTimer.bind(this), 10 * 1000);
-            // this.setState({ timeoutId: timeoutId });
+            const timeoutId = setTimeout(fetchLastDataByTimer.bind(this), seconds * 1000);
+            this.setState({ timeoutId: timeoutId });
+            console.log("update curr data", timeoutId);
         }
-        setTimeout(fetchLastDataByTimer.bind(this), 10 * 1000); //don't care about this timer id...
+        let timer2 = setTimeout(fetchLastDataByTimer.bind(this), seconds * 1000); //main timer who lauches fetchLastDataByTimer
+        console.log("update curr data timer2", timer2);
+
     }
     alertFunction() {
         if (this.state.errorMessage) {
@@ -163,8 +167,7 @@ class Mine extends Component {
 
     render() {
         console.log("render");
-        // {console.log(this.state.isBurgerOpen);}
-        // debugger;
+
         return (
             <div >
                 {/*{this.alertFunction()}*/}
@@ -172,9 +175,9 @@ class Mine extends Component {
                 {/*<button onClick={browserHistory.goBack} >
                     Назад
                 </button>*/}
-                 
+
                 <div >
-                    <h2>{this.state.mineName.association} {this.state.mineName.mineName}</h2>
+                    <h2>{this.state.mine.association} {this.state.mine.mineName}</h2>
                     <div className="sensors-container">
                         {
                             this.drawSensors()
@@ -182,72 +185,10 @@ class Mine extends Component {
                     </div>
                 </div>
 
-                
+
 
                 {/*footer*/}
                 {/*<footer className="footer fixed-bottom">
-                    <Container fluid>
-
-                        <div className="warning-list">
-                            <div className="warning-item">
-                                <a href="#K1-1">Ch4 2%</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">Ch4 2%</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">Ch4 2%</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">Ch4 2%</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                            <div className="warning-item">
-                                <a href="#K1-1">CO 20 ppm</a>
-                            </div>
-                        </div>
-                    </Container>
                 </footer>*/}
             </div>
         );

@@ -31,16 +31,16 @@ class Header extends Component {
         if (this.props.authenticated) {
             return (
                 <NavItem eventKey={6} onClick={() => this.props.signoutUser()} >
-                    Sign Out
+                    Выход
                 </NavItem>
             );
         } else {
             return [
                 <NavItem key={1}>
-                    <NavLink tag={Link} className="nav-link" to="/signin/" activeClassName="active">Sign in</NavLink>
+                    <NavLink tag={Link} className="nav-link" to="/signin/" activeClassName="active">Вход</NavLink>
                 </NavItem>,
                 <NavItem key={2}>
-                    <NavLink tag={Link} className="nav-link" to="/signup/" activeClassName="active">Sign up</NavLink>
+                    <NavLink tag={Link} className="nav-link" to="/signup/" activeClassName="active">Регистрация</NavLink>
                 </NavItem>
             ];
         }
@@ -76,7 +76,7 @@ class Header extends Component {
                             {/*<NavItem>
                                 <a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={this.handleToggleClick}>Toggle Menu</a>
                             </NavItem>*/}
-                            <NavItem>
+                            {/*<NavItem>
                                 <NavLink tag={Link} className="nav-link" to="/todo" activeClassName="active">Todo</NavLink>
                             </NavItem>
                             <NavItem>
@@ -84,7 +84,7 @@ class Header extends Component {
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={Link} className="nav-link" to="/resources" activeClassName="active">resources</NavLink>
-                            </NavItem>
+                            </NavItem>*/}
                             {/*<NavItem>
                                 <button onClick={this.handleClick}>
                                     {this.state.isToggleOn ? 'ON' : 'OFF'}
@@ -95,6 +95,7 @@ class Header extends Component {
                     </Collapse>
                 </Navbar>
                 <Menu isOpen={this.state.isToggleOn} right onStateChange={this.isMenuOpen.bind(this)} >
+                    {/*replace with real data*/}
                         <div className="warning-list">
                             <div className="warning-item">
                                 <a href="#K1-1">Ch4 2%</a>
