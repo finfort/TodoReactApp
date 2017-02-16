@@ -11,7 +11,8 @@ import * as Helper from './helpers/mines';
 import axios from 'axios';
 import { CardDeck, Container, Alert } from 'reactstrap';
 
-const ROOT_URL = 'http://localhost:3090'; // api url
+const ROOT_URL = 'http://r1:3090'; // api url
+// bring out this to config file, and handle error if no connection 
 
 class Mine extends Component {
     constructor(props) {

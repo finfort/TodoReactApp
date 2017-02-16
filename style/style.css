@@ -98,7 +98,7 @@
 }
 
 .chfault{
-     background-color: #337ab7; 
+     background-color: deepskyblue; 
      border-radius: inherit;
 }
 
@@ -117,6 +117,9 @@
 .card-deck .card:not(:last-child){
     margin-left: 0px !important;    
 }
+.card:not(:first-child) {
+    margin-left: 0px !important;
+}
 
 /*footer*/
 .footer{
@@ -131,6 +134,7 @@
 body {
     padding-top: 55px;
     padding-bottom: 55px;
+    overflow-x: hidden;
     }
 
 .anchor{
@@ -142,16 +146,16 @@ body {
 
 
 .warning-item{
-    margin-right: 10px;
-    display: inline-block;
+    margin-top: 10px;
+    width: 120px;
     background-color: red;
     border-radius: 5px;
 }
 
 .warning-list {
-    border: 1px solid black;
-    overflow: scroll;
-    height: 55px;
+    /*border: 1px solid black;*/
+    /*overflow-y: scroll;*/
+    /*height: 55px;*/
     
 }
 
@@ -167,7 +171,6 @@ body {
   height: 30px;
   right: 0px;
   top: 55px;
-  z-index: 1 !important;
 }
 
 /* Color/shape of burger icon bars */
@@ -191,6 +194,7 @@ body {
   background: #373a47;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
+  margin-top: -55px;
 }
 
 /* Morph shape necessary with bubble or elastic */

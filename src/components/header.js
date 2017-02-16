@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { slide as Menu } from 'react-burger-menu';
 
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Container } from 'reactstrap';
 
 
 
@@ -95,10 +95,105 @@ class Header extends Component {
                     </Collapse>
                 </Navbar>
                 <Menu isOpen={this.state.isToggleOn} right onStateChange={this.isMenuOpen.bind(this)} >
-                    <a id="home" className="menu-item" href="/">Home</a>
-                    <a id="about" className="menu-item" href="/about">About</a>
-                    <a id="contact" className="menu-item" href="/contact">Contact</a>
-                    <a className="menu-item--small" href="">Settings</a>
+                        <div className="warning-list">
+                            <div className="warning-item">
+                                <a href="#K1-1">Ch4 2%</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K17-2">Ch4 2%</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">Ch4 2%</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">Ch4 2%</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                            <div className="warning-item">
+                                <a href="#K8-1">CO 20 ppm</a>
+                            </div>
+                        </div>
+                   
                 </Menu>
             </div>
         );
