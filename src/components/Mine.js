@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';// eslint-disable-line
 
 import { browserHistory } from 'react-router';
+import Header from './header';
+
 
 import SensorLarge from './SensorLarge';
 import * as Data from './helpers/Data';
@@ -11,7 +13,7 @@ import * as Helper from './helpers/mines';
 import axios from 'axios';
 import { CardDeck, Container, Alert } from 'reactstrap';
 
-const ROOT_URL = 'http://r1:3090'; // api url
+const API_URL = 'http://r1:3090'; // api url
 // bring out this to config file, and handle error if no connection 
 
 class Mine extends Component {
@@ -22,6 +24,7 @@ class Mine extends Component {
             sensors: [],
             lastData: {},
             timeoutId: '',
+            mainTimer: '',
             errorMessage: ''
         };
 
@@ -40,7 +43,7 @@ class Mine extends Component {
     }
     fetchLastData() {
         // console.log("start fetching lastData");
-        axios.get(`${ROOT_URL}/getLastData`) //es6 String Substitution
+        axios.get(`${API_URL}/getLastData`) //es6 String Substitution
             .then(response => {
                 // //clean error message this calls re render 
                 // this.setState({
@@ -69,7 +72,7 @@ class Mine extends Component {
     // }
     fetchSensorsData() {
         console.log("fetchSensorsData");
-        axios.get(`${ROOT_URL}/getSensorsData`) //es6 String Substitution
+        axios.get(`${API_URL}/getSensorsData`) //es6 String Substitution
             .then(response => {
                 // console.log(" generateScreen getSensorsData", response);
                 let sensorsData = response.data[0];
@@ -117,6 +120,7 @@ class Mine extends Component {
         //this.serverRequest.abort();
         console.log("unmount clear everything", this.state.timeoutId);
         clearTimeout(this.state.timeoutId);
+        clearTimeout(this.state.mainTimer);
 
         // TODO abort requests to server
     }
@@ -130,8 +134,10 @@ class Mine extends Component {
             this.setState({ timeoutId: timeoutId });
             console.log("update curr data", timeoutId);
         }
-        let timer2 = setTimeout(fetchLastDataByTimer.bind(this), seconds * 1000); //main timer who lauches fetchLastDataByTimer
-        console.log("update curr data timer2", timer2);
+        let mainTimer = setTimeout(fetchLastDataByTimer.bind(this), seconds * 1000); //main timer who lauches fetchLastDataByTimer
+        console.log("update curr data mainTimer", mainTimer);
+        this.setState({ mainTimer: mainTimer });
+
 
     }
     alertFunction() {
@@ -170,6 +176,8 @@ class Mine extends Component {
 
         return (
             <div >
+                <Header lastData={this.state.lastData} />
+
                 {/*{this.alertFunction()}*/}
 
                 {/*<button onClick={browserHistory.goBack} >

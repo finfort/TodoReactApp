@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Header from './header';
 
 class MinesTable extends Component {
   render() {
@@ -14,6 +15,8 @@ class MinesTable extends Component {
       lastAsosc = mine.association;
     });
     return (
+      <div> 
+        <Header/>
       <table>
         <thead>
           <tr>
@@ -22,6 +25,7 @@ class MinesTable extends Component {
         </thead>
         <tbody>{rows}</tbody>
       </table>
+      </div>
     );
   }
 }
