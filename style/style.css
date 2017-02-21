@@ -164,6 +164,9 @@ body {
     color: black;
 }
 
+.bm-menu-wrap{
+    width: 350px !important;
+}
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
@@ -194,9 +197,9 @@ body {
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: #f7f7f7;
   padding: 2.5em 1.5em 0;
-  font-size: 1.15em;
+  /* font-size: 1.15em; */
   margin-top: -55px;
 }
 
@@ -207,11 +210,25 @@ body {
 
 /* Wrapper for item list */
 .bm-item-list {
-  color: #b8b7ad;
+  color: rgba(0, 0, 0, 0.9);
   padding: 0.8em;
 }
 
 /* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
+}
+
+#table-danger{
+    background-color: #f00;
+}
+#table-warning{
+    background-color: #ff0;
+}
+#table-info{
+    background-color: deepskyblue;
+}
+
+#alarm tbody tr:hover {
+    opacity: 0.5;
 }

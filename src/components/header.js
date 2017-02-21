@@ -63,10 +63,40 @@ class Header extends Component {
     drawAlertMenu() {
         let activeRouteName = this.props.location.pathname;
         // active only for mines routes
-        if (activeRouteName == '/mine/'+ this.props.router.params.mineId) {
+        if (activeRouteName == '/mine/' + this.props.router.params.mineId) {
             return (
                 <Menu isOpen={this.state.isToggleOn} right onStateChange={this.isMenuOpen.bind(this)} >
                     {/*replace with real data*/}
+                    {/*<div className="table-responsive">*/}
+                        <table id="alarm" className="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Тип</th>
+                                    <th>Значение</th>
+                                    <th>Предупреждения</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="table-danger">
+                                    <td>CH4</td>
+                                    <td>2%</td>
+                                    <td>Авария</td>
+                                </tr>
+                                <tr id="table-warning">
+                                    <td>H2S</td>
+                                    <td>1 ppm</td>
+                                    <td>Предупрждение</td>
+                                </tr>
+                                <tr id="table-info">
+                                    <td>1,003</td>
+                                    <td>Integer</td>
+                                    <td>Ошибка</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    {/*</div>*/}
+                    {/*                    
                     <div className="warning-list">
                         <div className="warning-item">
                             <a href="#K1-1">Ch4 2%</a>
@@ -164,7 +194,7 @@ class Header extends Component {
                         <div className="warning-item">
                             <a href="#K8-1">CO 20 ppm</a>
                         </div>
-                    </div>
+                    </div>*/}
 
                 </Menu>
             );
