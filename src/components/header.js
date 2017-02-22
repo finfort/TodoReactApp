@@ -59,6 +59,14 @@ class Header extends Component {
         });
         return state.isOpen;
     }
+    formatValue(value) {
+        if (value == 0)
+            return 0;
+        value = Math.abs(value);
+        if (value <= 10) return value.toFixed(2);
+        if (value > 10 && value <= 50) return value.toFixed(1);
+        return value.toFixed(0);
+    }
 
     drawAlertMenu() {
         let activeRouteName = this.props.location.pathname;
@@ -68,33 +76,33 @@ class Header extends Component {
                 <Menu isOpen={this.state.isToggleOn} right onStateChange={this.isMenuOpen.bind(this)} >
                     {/*replace with real data*/}
                     {/*<div className="table-responsive">*/}
-                        <table id="alarm" className="table table-sm table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Тип</th>
-                                    <th>Значение</th>
-                                    <th>Предупреждения</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr id="table-danger">
-                                    <td>CH4</td>
-                                    <td>2%</td>
-                                    <td>Авария</td>
-                                </tr>
-                                <tr id="table-warning">
-                                    <td>H2S</td>
-                                    <td>1 ppm</td>
-                                    <td>Предупрждение</td>
-                                </tr>
-                                <tr id="table-info">
-                                    <td>1,003</td>
-                                    <td>Integer</td>
-                                    <td>Ошибка</td>
-                                </tr>
-                               
-                            </tbody>
-                        </table>
+                    <table id="alarm" className="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Тип</th>
+                                <th>Значение</th>
+                                <th>Предупреждения</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/*<tr id="table-danger">
+                                <td>CH4</td>
+                                <td>2%</td>
+                                <td>Авария</td>
+                            </tr>
+                            <tr id="table-warning">
+                                <td>H2S</td>
+                                <td>1 ppm</td>
+                                <td>Предупрждение</td>
+                            </tr>
+                            <tr id="table-info">
+                                <td>1,003</td>
+                                <td>Integer</td>
+                                <td>Ошибка</td>
+                            </tr>*/}
+                            {this.generatAlertRows()}
+                        </tbody>
+                    </table>
                     {/*</div>*/}
                     {/*                    
                     <div className="warning-list">
@@ -200,11 +208,144 @@ class Header extends Component {
             );
         }
     }
+    generatAlertRows() {
+        // todo refactor code extract main logic
+
+        if (this.props.lastData[0] != null) { // if there exist data
+            let rows = [];
+
+            this.props.lastData.map((controllerRow) => {
+                let channel = 1;
+                let ch_val = 0;
+                let ch_sp1_val = 0;
+                let ch_sp2_val = 0;
+                let ch_sp1 = 0;
+                let ch_sp2 = 0;
+                let ch_f = 0;
+                for (channel; channel < 8; channel++) {
+                    ch_val = controllerRow["ch" + channel + "_val"];
+                    // ch_sp1_val = controllerRow["ch" + channel + "_sp1_val"];
+                    // ch_sp2_val = controllerRow["ch" + channel + "_sp2_val"];
+                    ch_sp1 = controllerRow["ch" + channel + "_sp1"];
+                    ch_sp2 = controllerRow["ch" + channel + "_sp2"];
+                    ch_f = controllerRow["ch" + channel + "_f"];
+
+                    // format value
+                    ch_val = this.formatValue(ch_val);
+                    ch_sp1_val = this.formatValue(ch_sp1_val);
+                    ch_sp2_val = this.formatValue(ch_sp2_val);
+
+                    this.props.sensorsData.map((sensor, index) => {
+                        if (sensor.data_type == "дискретный") return;
+                        if (sensor.id_controller == controllerRow['ContrName'] && sensor.channel == channel) {
+                            let healthy = controllerRow["healthy"];
+                            let sensorState;
+                            if (!healthy) {
+                                sensorState = "nothealthysensor";
+                            }
+                            else if (ch_f) {
+                                sensorState = "chfault";
+                            }
+                            else {
+                                if (ch_sp1) {
+                                    sensorState = "sp1";
+                                }
+                                if (ch_sp2) {
+                                    sensorState = "sp2";
+                                }
+                            }
+                            // debugger;
+                            switch (sensorState) {
+                                case "chfault":
+                                    rows.push(
+                                        <tr id="table-info" key={index}>
+                                            <td>
+                                                <a href={"#K" + sensor.id_controller + "-" + sensor.channel}>
+                                                    {sensor.prefix_short}
+                                                </a>
+                                            </td>
+                                            <td>{ch_val} {sensor.data_type}</td>
+                                            <td>Ошибка</td>
+                                        </tr>);
+                                    break;
+                                case "sp1":
+                                    rows.push(
+                                        <tr id="table-warning" key={index}>
+                                            <td>
+                                                <a href={"#K" + sensor.id_controller + "-" + sensor.channel}>
+                                                    {sensor.prefix_short}
+                                                </a>
+                                            </td>
+                                            <td>{ch_val} {sensor.data_type}</td>
+                                            <td>Предупреждение</td>
+                                        </tr>);
+                                    break;
+                                case "sp2":
+                                    rows.push(
+                                        <tr id="table-danger" key={index}>
+                                            <td>
+                                                <a href={"#K" + sensor.id_controller + "-" + sensor.channel}>
+                                                    {sensor.prefix_short}
+                                                </a>
+                                            </td>
+                                            <td>{ch_val} {sensor.data_type}</td>
+                                            <td>Авария</td>
+                                        </tr>
+                                    );
+                                    break;
+                            }
+
+                            /*if (ch_sp2) {
+                                rows.push(
+
+                                    <tr id="table-danger" key={index}>
+                                        <td>
+                                            <a href={"#K" + sensor.id_controller + "-" + sensor.channel}>
+                                                {sensor.prefix_short}
+                                            </a>
+                                        </td>
+                                        <td>{ch_val} {sensor.data_type}</td>
+                                        <td>Авария</td>
+                                    </tr>
+                                );
+                            }
+                            if (ch_sp1) {
+                                rows.push(
+                                    <tr id="table-warning" key={index}>
+                                        <td>
+                                            <a href={"#K" + sensor.id_controller + "-" + sensor.channel}>
+                                                {sensor.prefix_short}
+                                            </a>
+                                        </td>
+                                        <td>{ch_val} {sensor.data_type}</td>
+                                        <td>Предупреждение</td>
+                                    </tr>);
+                            }
+                            if (ch_f) {
+                                rows.push(
+                                    <tr id="table-info" key={index}>
+                                        <td>
+                                            <a href={"#K" + sensor.id_controller + "-" + sensor.channel}>
+                                                {sensor.prefix_short}
+                                            </a>
+                                        </td>
+                                        <td>{ch_val} {sensor.data_type}</td>
+                                        <td>Ошибка</td>
+                                    </tr>);
+                            }*/
+                        }
+                    });
+
+                }
+
+            });
+            return rows;
+        }
+    }
+
     render() {
-
-
         return (
-            <div>
+            <div >
                 <Navbar color="faded" light toggleable fixed="top">
                     <NavbarToggler right onClick={this.toggle} />
                     <NavbarBrand tag={Link} to="/">
@@ -234,7 +375,7 @@ class Header extends Component {
                     </Collapse>
                 </Navbar>
                 {this.drawAlertMenu()}
-            </div>
+            </div >
         );
     }
 }

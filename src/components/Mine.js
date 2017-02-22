@@ -176,7 +176,7 @@ class Mine extends Component {
 
         return (
             <div >
-                <Header lastData={this.state.lastData} />
+                <Header lastData={this.state.lastData} sensorsData={this.state.sensors} />
 
                 {/*{this.alertFunction()}*/}
 

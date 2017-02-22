@@ -9,26 +9,12 @@ import {
 class SensorLarge extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      color: 'green',
-
-    };
-    this.handleClick = this.handleClick.bind(this);
   }
-  handleClick() {
-    this.setState({
-      color: 'red'
-    });
-  }
-
-  handleData() {
-
-  }
-
+ 
   formatValue(value) {
     if (value == 0)
       return 0;
-    value = Math.abs(value)
+    value = Math.abs(value);
     if (value <= 10) return value.toFixed(2);
     if (value > 10 && value <= 50) return value.toFixed(1);
     return value.toFixed(0);
@@ -42,7 +28,7 @@ class SensorLarge extends React.Component {
     
     */
     /*
-        Столбец	Назначение
+    Столбец	Назначение
     ch1_val	Масштабированное значение на канале
     ch1_sp1_val	Масштабированное значение уставки 1
     ch1_sp2_val	Масштабированное значение уставки 2
@@ -92,7 +78,7 @@ class SensorLarge extends React.Component {
         if (controllerRow['ContrName'] == id_controller) {
           // pull out data for sensor from sensor controller
           // apply filtering data
-    // debugger;
+          // debugger;
           
           healthy = controllerRow["healthy"];
           ch_val = controllerRow["ch" + channel + "_val"];
@@ -119,7 +105,6 @@ class SensorLarge extends React.Component {
     }
 
     //check if no data on last data show connection error with database
-    // debugger
     let sensorState;
     if (this.props.lastData[0] != null) { // if there exist data
       //switch on states
