@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';// eslint-disable-line
 
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 import Header from './header';
 
 
 import SensorLarge from './SensorLarge';
-import * as Data from './helpers/Data';
+// import * as Data from './helpers/Data';
 import * as Helper from './helpers/mines';
 
 
 import axios from 'axios';
-import { CardDeck, Container, Alert } from 'reactstrap';
+import { CardDeck, Alert } from 'reactstrap';
 
 const API_URL = 'http://r1:3090'; // api url
 // bring out this to config file, and handle error if no connection 
@@ -43,21 +43,22 @@ class Mine extends Component {
     }
     fetchLastData() {
         // console.log("start fetching lastData");
-        axios.get(`${API_URL}/getLastData`) //es6 String Substitution
+        return axios.get(`${API_URL}/getLastData`) //es6 String Substitution
             .then(response => {
-                // //clean error message this calls re render 
-                // this.setState({
-                //     errorMessage: ''
-                // });
+                //clean error message this calls re render 
+                this.setState({
+                    errorMessage: ''
+                });
                 this.setState({
                     lastData: response.data[0]
                 });
                 console.log("fetched LastData");
             })
             .catch((err) => {
-                console.log(err);
+                console.log("fetchLastData Err");
+                console.dir(err.response);
                 this.setState({
-                    errorMessage: err
+                    errorMessage: err.response.status + " " + err.response.data.errorMessage
                 });
             });
     }
@@ -71,18 +72,26 @@ class Mine extends Component {
     //     this.state.lastData;
     // }
     fetchSensorsData() {
-        console.log("fetchSensorsData");
+        // console.log("fetchSensorsData");
         axios.get(`${API_URL}/getSensorsData`) //es6 String Substitution
             .then(response => {
                 // console.log(" generateScreen getSensorsData", response);
+                // one field for errors not so good
+                this.setState({
+                    errorMessage: ''
+                });
                 let sensorsData = response.data[0];
                 this.setState({
                     sensors: sensorsData
                 });
-                // console.log("fetchSensorsData state", sensorsData);
+                console.log("fetchSensorsData state");
             })
             .catch((err) => {
-                console.log(err);
+                console.log("fetchSensorsData Err");
+                console.dir(err.response);
+                this.setState({
+                    errorMessage: err.response.status + " " + err.response.data.errorMessage
+                });
             });
         //static content generation
         /*return Data.sensorsDescription.map((sensor, index) => {
@@ -129,6 +138,7 @@ class Mine extends Component {
     updateCurrData() {
         let seconds = 10;
         function fetchLastDataByTimer() {
+            this.fetchSensorsData();
             this.fetchLastData();
             const timeoutId = setTimeout(fetchLastDataByTimer.bind(this), seconds * 1000);
             this.setState({ timeoutId: timeoutId });
@@ -142,9 +152,14 @@ class Mine extends Component {
     }
     alertFunction() {
         if (this.state.errorMessage) {
-            return (<Alert color="danger">
-                <strong>Ошибка!</strong> {this.state.errorMessage}
-            </Alert>);
+            return (
+                <div className="overlay-error ">
+                    <div className="error-panel overlay-content">
+                        <Alert color="danger">
+                            <strong>Ошибка!</strong> {this.state.errorMessage.toString()}
+                        </Alert>
+                    </div>
+                </div>);
         }
     }
     drawSensors() {
@@ -178,13 +193,14 @@ class Mine extends Component {
             <div >
                 <Header lastData={this.state.lastData} sensorsData={this.state.sensors} />
 
-                {/*{this.alertFunction()}*/}
 
                 {/*<button onClick={browserHistory.goBack} >
                     Назад
                 </button>*/}
 
                 <div >
+                    {this.alertFunction()}
+
                     <h2>{this.state.mine.association} {this.state.mine.mineName}</h2>
                     <div className="sensors-container">
                         {

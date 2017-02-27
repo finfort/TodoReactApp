@@ -20,11 +20,7 @@ exports.getData = function (res, procedure) {
             });
     }).catch(function (err) {
         console.log("err conn",err);
-        
-        res.status(err.status || 500); //change this
-        
-        //res.send(err).status(err.status || 500);
-        
+        res.status(500).send( {errorMessage: err.message});
         //exception for example when network disabled
         // if no connection show error message on screen
     });
