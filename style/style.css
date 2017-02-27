@@ -16,14 +16,8 @@
     text-align: -webkit-right;
     font-size: larger;
     font-weight: bold;
-    /* text-align: -webkit-center; */
-    /*padding-right: 0 !important;*/
 }
 
-.row-alarms{
-    /*margin-left: 0 !important;*/
-    /*margin-right: 0 !important;*/
-}
 
 .units{
     font-size: medium;
@@ -34,12 +28,6 @@
 
 .alarm1-value, .alarm2-value{
     font-size: medium;
-    /*padding-left: 0 !important;*/
-
-}
-
-.alarm-direction{
-
 }
 
 .sensor-type{
@@ -250,6 +238,4 @@ body {
     position: relative;
     top: 6%;
     width: 100%;
-    /* text-align: center; */
-    /* margin-top: 30px; */
 }

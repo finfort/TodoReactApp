@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';// eslint-disable-line
 import classNames from 'classnames';
 import {
-  Card, CardImg, CardText, CardBlock,
-  CardTitle, CardSubtitle, Button, Row, Col, Container
+  Card, CardText, Row, Col, Container
 } from 'reactstrap';
 
 class SensorLarge extends React.Component {
