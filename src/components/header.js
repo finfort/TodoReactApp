@@ -73,7 +73,7 @@ class Header extends Component {
         // active only for mines routes
         if (activeRouteName == '/mine/' + this.props.router.params.mineId) {
             return (
-                <Menu isOpen={this.state.isToggleOn} right onStateChange={this.isMenuOpen.bind(this)} >
+                <Menu isOpen={this.state.isToggleOn} right onStateChange={this.isMenuOpen.bind(this)}  customBurgerIcon={ <img src="/public/img/bell.svg" /> } >
                     {/*replace with real data*/}
                     {/*<div className="table-responsive">*/}
                     <table id="alarm" className="table table-sm table-hover">
