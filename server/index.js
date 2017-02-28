@@ -11,7 +11,7 @@ const app = express();
 
 const router = require('./router');
 
-// mongoose.connect('mongodb://localhost/auth');
+mongoose.connect('mongodb://localhost/auth');
 
 app.use(cors()); // limit to particular domain not for the whole world 
 
