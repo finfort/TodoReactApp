@@ -38,7 +38,8 @@ export const toggleTodo = (id) => {
 
 
 export function fetch_users() {
-  const request = axios.get('https://jsonplaceholder.typicode.com/users');
+  // const request = axios.get('https://jsonplaceholder.typicode.com/users');
+  const request = axios.get(`${ROOT_URL}/admin/users`);
   return {
     type: FETCH_USERS,
     payload: request
@@ -69,7 +70,7 @@ export function signinUser({email, password}) {
         // - Save JWT token
         localStorage.setItem('token', response.data.token);
         // -redirect to the route '/resources' protected route
-        browserHistory.push('/resources');
+        browserHistory.push('/');
       })
       .catch(() => {
         // if request is bad
@@ -94,7 +95,7 @@ export function signupUser({email, password}) {
       .then(response => {
         dispatch({ type: AUTH_USER });
         localStorage.setItem('token', response.data.token);
-        browserHistory.push('/resources');
+        browserHistory.push('/');
 
       })
       .catch((response) => {

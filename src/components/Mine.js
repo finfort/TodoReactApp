@@ -32,14 +32,16 @@ class Mine extends Component {
 
     // when users goes from MinesList get info from route which mine selected, or grub info from props
     componentWillMount() {
-        console.log("component will mount");
-        this.setState({
-            // route components are rendered with useful information, like URL params
-            mine: Helper.findMinebyId(this.props.params.mineId),
-        });
-        this.fetchSensorsData();
+        if (this.props.authenticated) { // dirty check maybe delete
+            console.log("component will mount");
+            this.setState({
+                // route components are rendered with useful information, like URL params
+                mine: Helper.findMinebyId(this.props.params.mineId),
+            });
+            this.fetchSensorsData();
 
-        this.fetchLastData();
+            this.fetchLastData();
+        }
     }
     fetchLastData() {
         // console.log("start fetching lastData");
@@ -97,7 +99,7 @@ class Mine extends Component {
         /*return Data.sensorsDescription.map((sensor, index) => {
             //filter on дискретный
             if (sensor.data_type == "дискретный") return;
-
+    
             return (
                 <SensorLarge key={sensor.id_sensor}
                     id_sensor={sensor.id_sensor}
@@ -118,10 +120,11 @@ class Mine extends Component {
     componentDidMount() {
         //make request to server with axios
         // or get dummy data from Data.lastData
-        console.log("DidMount");
-        this.updateCurrData();
-        //should this be state? set it and access to it from sensor large child component to update by itself
-
+        if (this.props.authenticated) {
+            console.log("DidMount");
+            this.updateCurrData();
+            //should this be state? set it and access to it from sensor large child component to update by itself
+        }
     }
 
     // On unmount component abourt request to server

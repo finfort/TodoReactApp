@@ -22,13 +22,13 @@ class UserList extends Component {
             <div >
                 <div className="user-list">{this.props.users.map(this.renderUser)}</div>
             </div>
-        )
+        );
     }
 }
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         users: state.users
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, actions)(UserList)
+export default connect(mapStateToProps, actions)(UserList);

@@ -30,7 +30,7 @@ class Header extends Component {
     authLink() {
         if (this.props.authenticated) {
             return (
-                <NavItem eventKey={6} onClick={() => this.props.signoutUser()} >
+                <NavItem  onClick={() => this.props.signoutUser()} >
                     Выход
                 </NavItem>
             );

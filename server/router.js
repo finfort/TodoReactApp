@@ -2,6 +2,7 @@ const Authentication = require('./controllers/authentication');
 const passportService = require('./services/passport');
 const passport = require('passport');
 const sqlData = require('./controllers/getSensorsData');
+const Users = require('./controllers/users');
 // const getLastData = require('./controllers/getLastData');
 
 //require to use passwport a jwt strategy for web app and disable session
@@ -22,5 +23,6 @@ module.exports = function (app) {
     app.get('/getLastData', function (req, res) {
         sqlData.getData(res, 'GetLastData');
     }); 
+    app.get('/admin/users', Users.getAllUsers);
    
 };

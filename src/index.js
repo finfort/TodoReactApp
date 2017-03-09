@@ -14,7 +14,7 @@ import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
 import Resources from './components/resources';
 import TodoComponent from './components/TodoComponent';
-import UserList from './components/user_list';
+import Users from './components/admin/users';
 
 import Mine from './components/Mine';
 
@@ -48,12 +48,13 @@ ReactDOM.render(
     <Router history={browserHistory} >
       <Route path="/" component={App} >
         <IndexRoute component={HomePage} />
-         <Route path="mine/:mineId" component={Mine}/>
+         <Route path="mine/:mineId" component={requireAuth(Mine)}/>
         <Route path="signin" component={Signin} />
         <Route path="signup" component={Signup} />
-        <Route path="resources" component={requireAuth(Resources)} />
-        <Route path="todo" component={TodoComponent} />
-        <Route path="users" component={UserList} />
+        {/*<Route path="resources" component={requireAuth(Resources)} />*/}
+        {/*<Route path="todo" component={TodoComponent} />*/}
+        {/*<Route path="users" component={UserList} />*/}
+        <Route path="admin/users" component={Users} />
       </Route>
     </Router>
   </Provider>
