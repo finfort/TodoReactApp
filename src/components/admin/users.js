@@ -7,60 +7,77 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 class Users extends Component {
     constructor(props) {
         super(props);
-        this.handleRole = this.handleRole.bind(this);
-        // this.handleActivated = this.handleActivated.bind(this);
+        this.state = {
+            email: '',
+            fio: '',
+            role: '',
+            isActivated: ''
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillMount() {
         this.props.fetch_users();
     }
 
-    handleActivated() {
-        console.log("ok");
-    }
-
-    handleRole(event) {
-        // const target = event.target;
-        // const value = target.type === 'checkbox' ? target.checked : target.value;
-        // const name = target.name;
-        console.log("role");
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log('submitted: ' + this.state.email, this.state.fio, this.state.role, this.state.isActivated);
+        // post data here to server
+        // or change it like sign in form
+        debugger;
     }
 
     renderUser(user) {
         return (
             <div key={user._id}>
-                <Form inline>
+                <Form inline onSubmit={this.handleSubmit}>
                     <FormGroup>
-                        <Label for="exampleEmail">Email</Label>
-                        <Input type="email" name="email" id="exampleEmail"
-                            placeholder="with a placeholder" value={user.email} />
+                        <Label >Email
+                        <Input type="email"
+                                name="email"
+                                defaultValue={user.email}
+                                placeholder="with a placeholder"
+                                onChange={handleEmail.bind(this)}
+                            />
+                        </Label>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="fio">ФИО</Label>
-                        <Input type="text" name="fio" id="fio" placeholder="" value={user.fio} />
+                        <Label >ФИО
+                        <Input type="text"
+                                name="fio"
+                                placeholder=""
+                                defaultValue={user.fio}
+                                onChange={handleFio.bind(this)} />
+                        </Label>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="exampleSelect">Уровень доступа</Label>
-                        <Input type="select" name="select" id="exampleSelect"
-                            onChange={this.handleRole()}>
-                            <option>Админ шахты</option>
-                            <option>Админ обьединения</option>
-                            <option>Диспетчер</option>
-                            <option>Администратор</option>
-                        </Input>
+                        <Label >Уровень доступа
+                        <Input type="select"
+                                name="select"
+                                onChange={handleRole.bind(this)}>
+                                <option>Админ шахты</option>
+                                <option>Админ обьединения</option>
+                                <option>Диспетчер</option>
+                                <option>Администратор</option>
+                            </Input>
+                        </Label>
                     </FormGroup>
                     <FormGroup check>
-                        <Label check for="isActivated">
+                        <Label check>
                             Активирован
+                            <Input
+                                type="checkbox"
+                                checked={user.isActivated}
+                                onChange={handleActivated.bind(this)} />
                         </Label>
-                        <Input id="isActivated" type="checkbox" checked={user.isActivated}
-                            onChange={this.handleActivated.bind(this)} />
+
                     </FormGroup>
                     <FormGroup>
                         <Button color="link">Удалить?</Button>
                     </FormGroup>
                     <FormGroup>
-                        <Button size="sm" color="success">Сохранить</Button>
+                        <Button size="sm" color="success" type="submit">Сохранить</Button>
                     </FormGroup>
                 </Form>
             </div>
@@ -70,7 +87,7 @@ class Users extends Component {
     render() {
         return (
             <div >
-                <div className="user-list">{this.props.users.map(this.renderUser)}</div>
+                <div className="user-list">{this.props.users.map((user) => this.renderUser(user))}</div>
             </div>
         );
     }
@@ -80,5 +97,32 @@ const mapStateToProps = (state) => {
         users: state.users
     };
 };
+function handleEmail(event) {
+    const target = event.target;
+    const value = target.type === 'email' ? target.value : "";
+    console.log(value);
+    this.setState({ email: value });
+    //change state of email
+}
+
+function handleFio(event) {
+    const target = event.target;
+    const value = target.type === 'text' ? target.value : "";
+    this.setState({ fio: value });
+    // console.log(value);
+}
+
+function handleRole(event) {
+    const target = event.target;
+    const value = target.type === 'select-one' ? target.value : "";
+    this.setState({ role: value });
+    // console.log(value);
+}
+function handleActivated(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({ isActivated: value });
+    // console.log(value);
+}
 
 export default connect(mapStateToProps, actions)(Users);
