@@ -13,9 +13,7 @@ import * as Helper from './helpers/mines';
 import axios from 'axios';
 import { CardDeck, Alert } from 'reactstrap';
 
-const API_URL = 'http://srv:3090'; // api url
-//TODO check on errors if url NOT MATCH
-// bring out this to config file, and handle error if no connection 
+import API_URL from '../config';
 
 class Mine extends Component {
     constructor(props) {
