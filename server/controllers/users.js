@@ -10,7 +10,40 @@ exports.getAllUsers = function (req, res, next) {
     });
 };
 
-exports.saveUser = function(req, res, next){
+exports.saveUser = function (req, res, next) {
     debugger;
-    console.log(req.body);
+    // User.findByIdAndUpdate(req._id, { $set: { email:  req.body.email } }, 
+    // function (err, user) {
+    //     if (err) return next(new Error('Could not find User'));
+    //     console.log('The raw response from Mongo was ', user);
+    // });
+    User.findByIdAndUpdate(req.body._id, {
+        $set: {
+            email: req.body.email,
+            fio: req.body.fio,
+            role: req.body.role,
+            isActivated: req.body.isActivated
+        }
+    }, function (err, user) {
+            if (err) return next(new Error('Could not find User'));
+            console.log('The raw response from Mongo was ', user);
+    });
+
+    // User.findById(req._id, function (err, usr) {
+    //     if (!usr)
+    //         return next(new Error('Could not find User'));
+    //     else {
+    //         // do your updates here
+    //         usr.modified = new Date();
+
+    //         usr.save(function (err) {
+    //             if (err)
+    //                 console.log('error');
+    //             else
+    //                 console.log('success');
+    //         });
+    //     }
+    // });
+
+    // console.log(req.body);
 };

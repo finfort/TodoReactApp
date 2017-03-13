@@ -27,6 +27,7 @@ class Users extends Component {
     }
 
     handleSubmit(itemId, event) {
+        event.preventDefault();
         console.log('submitted: ' + itemId, this.state.email, this.state.fio, this.state.role, this.state.isActivated);
         // post data here to server
         // or change it like sign in form
@@ -43,8 +44,7 @@ class Users extends Component {
             .catch(function (error) {
                 console.log(error);
             });
-        event.preventDefault();
-        debugger;
+        // debugger;
     }
 
     renderUser(user) {
