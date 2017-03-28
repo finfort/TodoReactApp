@@ -12,11 +12,14 @@ import App from './components/app';
 import HomePage from './components/homePage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
-import Resources from './components/resources';
-import TodoComponent from './components/TodoComponent';
+// import Resources from './components/resources';
+// import TodoComponent from './components/TodoComponent';
 import Users from './components/admin/users';
+import UserSearch from './components/admin/user-search';
+import UserDetails from './components/admin/details';
 
 import Mine from './components/Mine';
+import NotFound from './components/not-found';
 
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types';
@@ -40,7 +43,7 @@ const store = createStore(reducers, composeEnhancers(
 const token = localStorage.getItem('token');
 if (token) {
   // if we have token here log user in 
-	store.dispatch({ type: AUTH_USER });
+  store.dispatch({ type: AUTH_USER });
 }
 
 ReactDOM.render(
@@ -48,14 +51,24 @@ ReactDOM.render(
     <Router history={browserHistory} >
       <Route path="/" component={App} >
         <IndexRoute component={HomePage} />
-         <Route path="mine/:mineId" component={requireAuth(Mine)}/>
+        <Route path="mine/:mineId" component={requireAuth(Mine)} />
         <Route path="signin" component={Signin} />
         <Route path="signup" component={Signup} />
         {/*<Route path="resources" component={requireAuth(Resources)} />*/}
         {/*<Route path="todo" component={TodoComponent} />*/}
         {/*<Route path="users" component={UserList} />*/}
-        <Route path="admin/users" component={Users} />
+
+        {/*<Route path="/admin" component={App}>*/}
+        <Route path="admin/users2" component={Users} />
+        <Route path="/admin" component={App}>
+          <Route path="users" component={UserSearch} />
+          <Route path="users/:id" component={UserDetails} />
+          <Route path="*" component={NotFound} />
+        </Route>
+      
+      <Route path="*" component={NotFound} />
       </Route>
+
     </Router>
   </Provider>
   , document.querySelector('.app-body'));

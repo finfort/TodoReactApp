@@ -10,6 +10,8 @@ import {
 } from './types';
 
 
+const ROOT_URL = 'http://localhost:3090'; // api url
+
 
 let nextTodoId = 0;
 export const addTodo = (text) => {
@@ -36,7 +38,6 @@ export const toggleTodo = (id) => {
   };
 };
 
-
 export function fetch_users() {
   // const request = axios.get('https://jsonplaceholder.typicode.com/users');
   const request = axios.get(`${ROOT_URL}/admin/users`);
@@ -45,14 +46,13 @@ export function fetch_users() {
     payload: request
     };
 }
+
 export function signoutUser() {
   localStorage.removeItem('token');
   return {
     type: UNAUTH_USER
   };
 }
-
-const ROOT_URL = 'http://localhost:3090'; // api url
 
 //action creator should always return an object but
 // with redux thunk it returns a function

@@ -5,28 +5,30 @@ import * as actions from '../../actions';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import API_URL from '../../config';
 
+const ReactRouter = require('react-router');
+const Link = ReactRouter.Link;
 
 class Users extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            email: '',
-            fio: '',
-            role: '',
-            isActivated: ''
-        };
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleEmail = this.handleEmail.bind(this);
-        this.handleFio = this.handleFio.bind(this);
-        this.handleRole = this.handleRole.bind(this);
-        this.handleActivated = this.handleActivated.bind(this);
+        // this.state = {
+        //     email: '',
+        //     fio: '',
+        //     role: '',
+        //     isActivated: ''
+        // };
+        // // this.handleSubmit = this.handleSubmit.bind(this);
+        // this.handleEmail = this.handleEmail.bind(this);
+        // this.handleFio = this.handleFio.bind(this);
+        // this.handleRole = this.handleRole.bind(this);
+        // this.handleActivated = this.handleActivated.bind(this);
     }
 
     componentWillMount() {
         this.props.fetch_users();
     }
 
-    handleSubmit(userId, event) {
+    /*handleSubmit(userId, event) {
         event.preventDefault();
         console.log('submitted: ' + userId, this.state.email, this.state.fio, this.state.role, this.state.isActivated);
         // console.log(this.state.email? this.props.);
@@ -103,41 +105,85 @@ class Users extends Component {
                 </Form>
             </div>
         );
-    }
+    }*/
 
     render() {
+
+        const rows = this.props.users.map((user) => {
+            return (
+                <tr key={user._id}>
+                    <td>
+                        <Link
+                            className="btn btn-default btn-sm"
+                            to={`/admin/users/${user._id}`}>
+
+                            Edit
+                        </Link>
+                    </td>
+                    <td>{user.fio}</td>
+                    <td>{user.email}</td>
+                    <td>  <Input
+                                type="checkbox"
+                                checked={user.isActivated}
+                                readOnly
+                                 />
+                                {/*{user.isActivated? "true": "false"}*/}
+                                </td>
+                    <td className="nowrap">{user._id}</td>
+                </tr>
+            );
+        });
+
         return (
-            <div >
+
+            <div className="table-responsive">
+                <table className="table table-striped table-results">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>username</th>
+                            <th className="stretch">email</th>
+                            <th>active</th>
+                            <th>id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
+                {/*<div >
                 <div className="user-list">{this.props.users.map((user) => this.renderUser(user))}</div>
+            </div>*/}
             </div>
+
         );
     }
-    handleEmail(event) {
-        const target = event.target;
-        const value = target.type === 'email' ? target.value : "";
-        console.log(value);
-        this.setState({ email: value });
-        //change state of email
-    }
-    handleFio(event) {
-        const target = event.target;
-        const value = target.type === 'text' ? target.value : "";
-        this.setState({ fio: value });
-        // console.log(value);
-    }
+    // handleEmail(event) {
+    //     const target = event.target;
+    //     const value = target.type === 'email' ? target.value : "";
+    //     console.log(value);
+    //     this.setState({ email: value });
+    //     //change state of email
+    // }
+    // handleFio(event) {
+    //     const target = event.target;
+    //     const value = target.type === 'text' ? target.value : "";
+    //     this.setState({ fio: value });
+    //     // console.log(value);
+    // }
 
-    handleRole(event) {
-        const target = event.target;
-        const value = target.type === 'select-one' ? target.value : "";
-        this.setState({ role: value });
-        // console.log(value);
-    }
-    handleActivated(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        this.setState({ isActivated: value });
-        // console.log(value);
-    }
+    // handleRole(event) {
+    //     const target = event.target;
+    //     const value = target.type === 'select-one' ? target.value : "";
+    //     this.setState({ role: value });
+    //     // console.log(value);
+    // }
+    // handleActivated(event) {
+    //     const target = event.target;
+    //     const value = target.type === 'checkbox' ? target.checked : target.value;
+    //     this.setState({ isActivated: value });
+    //     // console.log(value);
+    // }
 }
 const mapStateToProps = (state) => {
     return {
