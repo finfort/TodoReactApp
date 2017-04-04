@@ -16,7 +16,6 @@ import Signup from './components/auth/signup';
 // import TodoComponent from './components/TodoComponent';
 import Users from './components/admin/users';
 import UserSearch from './components/admin/user-search';
-import UserDetails from './components/admin/details';
 
 import Mine from './components/Mine';
 import NotFound from './components/not-found';
@@ -59,10 +58,10 @@ ReactDOM.render(
         {/*<Route path="users" component={UserList} />*/}
 
         {/*<Route path="/admin" component={App}>*/}
-        <Route path="admin/users2" component={Users} />
+        <Route path="admin/users" component={Users} />
         <Route path="/admin" component={App}>
-          <Route path="users" component={UserSearch} />
-          <Route path="users/:id" component={UserDetails} />
+          <Route path="users1" component={UserSearch} />
+          {/*<Route path="users/:id" component={UserDetails} />*/}
           <Route path="*" component={NotFound} />
         </Route>
       

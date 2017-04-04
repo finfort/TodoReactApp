@@ -24,6 +24,8 @@ module.exports = function (app) {
         sqlData.getData(res, 'GetLastData');
     }); 
     app.get('/admin/users', Users.getAllUsers);
-    app.post('/admin/users', Users.saveUser);
+    app.put('/admin/users', Users.updateUser);
+    app.post('/admin/users', Users.createUser);
+    app.post('/admin/delUsers', Users.deleteUsers);
    
 };

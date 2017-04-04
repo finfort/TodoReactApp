@@ -2,143 +2,145 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+// import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+
 import API_URL from '../../config';
 
 
-class Users extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            fio: '',
-            role: '',
-            isActivated: ''
-        };
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleEmail = this.handleEmail.bind(this);
-        this.handleFio = this.handleFio.bind(this);
-        this.handleRole = this.handleRole.bind(this);
-        this.handleActivated = this.handleActivated.bind(this);
-    }
+const cellEditProp = {
+    mode: 'click',
+    blurToSave: true,
+    afterSaveCell: onAfterSaveCell
 
+};
+
+const options = {
+    afterDeleteRow: handleDeletedRow,
+    afterInsertRow: handleInsertedRow,
+    noDataText: 'Нет данных'
+};
+
+const selectRow = {
+    mode: 'checkbox' //radio or checkbox
+};
+
+function handleDeletedRow(rowKeys) {
+    console.log(rowKeys);
+    axios.post(`${API_URL}/admin/delUsers`, {
+        _id: rowKeys
+    }).then(response => {
+        console.log("/admin/delUsers delete", response);
+    }).catch((err) => {
+        console.log("/admin/delUsers Err");
+        console.log(err);
+    });
+}
+
+function handleInsertedRow(row) {
+    console.log(row);
+    axios.post(`${API_URL}/admin/users`, {
+        _id: row._id,
+        email: row.email,
+        fio: row.fio,
+        isActivated: row.isActivated,
+        role: row.role
+    }).then(response => {
+        console.log("/admin/users post", response);
+    }).catch((err) => {
+        console.log("/admin/users insert Err");
+        console.log(err);
+    });
+}
+
+function onAfterSaveCell(row, cellName, cellValue) {
+    // console.log(row.fio);
+    // put row to db
+    axios.put(`${API_URL}/admin/users`, {
+        _id: row._id,
+        email: row.email,
+        fio: row.fio,
+        isActivated: row.isActivated,
+        role: row.role
+    }) //es6 String Substitution
+        .then(response => {
+            console.log("/admin/users state");
+
+        })
+        .catch((err) => {
+            console.log("/admin/users Err");
+            console.log(err);
+
+        });
+
+}
+
+// validator function pass the user input value and should return true|false.
+function NameValidator(value) {
+    const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
+    if (!value) {
+        response.isValid = false;
+        response.notification.type = 'error';
+        response.notification.msg = 'Необходимо ФИО';
+        response.notification.title = 'Запрашиваемое значение';
+    } else if (value.length < 1) {
+        response.isValid = false;
+        response.notification.type = 'error';
+        response.notification.msg = 'Более 1 символа';
+        response.notification.title = 'Неправильно значение';
+    }
+    return response;
+}
+
+function emailValidator(value) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(value)) {
+        return 'Здесь должна быть почта!';
+    }
+    return true;
+}
+
+// {
+//     "_id" : ObjectId("58c25a74494d8a1fa0f26241"),
+//     "email" : "anatoliy.ruchka@gmail.com",
+//     "password" : "$2a$10$orG6gqxP1donaDanZIlfYeUbSkKmnrcLcL70dzpQTXz3iGJcCuCgy",
+//     "__v" : 0,
+//     "isActivated" : true,
+//     "role" : "Админ шахты",
+//     "fio" : "safasdf"
+// }
+
+
+class Users extends Component {
     componentWillMount() {
         this.props.fetch_users();
     }
 
-    handleSubmit(userId, event) {
-        event.preventDefault();
-        console.log('submitted: ' + userId, this.state.email, this.state.fio, this.state.role, this.state.isActivated);
-        // console.log(this.state.email? this.props.);
-        debugger;
-        // 
-        // post data here to server
-        // or change it like sign in form
-        axios.post(`${API_URL}/admin/users`, {
-            _id: userId,
-            email: this.state.email,
-            fio: this.state.fio,
-            role: this.state.role,
-            isActivated: this.state.isActivated,
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-    renderUser(user) {
-        return (
-            <div key={user._id}>
-                <Form inline onSubmit={this.handleSubmit.bind(this, user._id)}>
-                    <FormGroup>
-                        <Label >Email
-                        <Input type="email"
-                                name="email"
-                                defaultValue={user.email}
-                                placeholder="with a placeholder"
-                                onChange={this.handleEmail}
-                            />
-                        </Label>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label >ФИО
-                        <Input type="text"
-                                name="fio"
-                                placeholder=""
-                                defaultValue={user.fio}
-                                onChange={this.handleFio} />
-                        </Label>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label >Уровень доступа
-                        <Input type="select"
-                                name="select"
-                                onChange={this.handleRole}>
-                                <option>Админ шахты</option>
-                                <option>Админ обьединения</option>
-                                <option>Диспетчер</option>
-                                <option>Администратор</option>
-                            </Input>
-                        </Label>
-                    </FormGroup>
-                    <FormGroup check>
-                        <Label check>
-                            Активирован
-                            <Input
-                                type="checkbox"
-                                checked={user.isActivated}
-                                onChange={this.handleActivated} />
-                        </Label>
-
-                    </FormGroup>
-                    <FormGroup>
-                        <Button color="link">Удалить?</Button>
-                    </FormGroup>
-                    <FormGroup>
-                        <Button size="sm" color="success" type="submit">Сохранить</Button>
-                    </FormGroup>
-                </Form>
-            </div>
-        );
-    }
-
     render() {
-        return (
-            <div >
-                <div className="user-list">{this.props.users.map((user) => this.renderUser(user))}</div>
-            </div>
-        );
-    }
-    handleEmail(event) {
-        const target = event.target;
-        const value = target.type === 'email' ? target.value : "";
-        console.log(value);
-        this.setState({ email: value });
-        //change state of email
-    }
-    handleFio(event) {
-        const target = event.target;
-        const value = target.type === 'text' ? target.value : "";
-        this.setState({ fio: value });
-        // console.log(value);
-    }
+        let rolesTypes = ['Диспетчер', 'Админ обьединения', 'Админ шахты', "Супер Администратор"];
 
-    handleRole(event) {
-        const target = event.target;
-        const value = target.type === 'select-one' ? target.value : "";
-        this.setState({ role: value });
-        // console.log(value);
-    }
-    handleActivated(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        this.setState({ isActivated: value });
-        // console.log(value);
+        return (
+            <BootstrapTable data={this.props.users} cellEdit={cellEditProp}
+                insertRow={true} hover selectRow={selectRow}
+                deleteRow search searchPlaceholder='Поиск...' multiColumnSearch
+                options={options}>
+                <TableHeaderColumn dataField='_id' isKey width="10%"  autoValue hiddenOnInsert hidden
+                >ID</TableHeaderColumn>
+                {/*hidden hiddenOnInsert autoValue*/}
+                <TableHeaderColumn dataField='email' editable={{ validator: emailValidator }} dataAlign='center' width="30%"
+                >Email</TableHeaderColumn>
+                <TableHeaderColumn dataField='fio' editable={{ validator: NameValidator }} dataAlign='center' width="30%"
+                >ФИО</TableHeaderColumn>
+                <TableHeaderColumn dataField='role'editable={{ type: 'select', options: { values: rolesTypes } }}   dataAlign='center' width="20%"
+                >Права</TableHeaderColumn>
+                <TableHeaderColumn dataField='isActivated' editable={{ type: 'checkbox', options: { values: 'ДА:НЕТ' } }}  dataAlign='center'  width="20%"
+                >Активирован</TableHeaderColumn>
+            </BootstrapTable>
+        );
+
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         users: state.users
@@ -146,3 +148,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, actions)(Users);
+
+// module.exports = Users;
