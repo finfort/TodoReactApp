@@ -9,8 +9,4 @@
 //     // }
 // };
 const config = "mssql://center:1@SRV/svod_db";
-
-module.exports = {
-    config
-};
-
+module.exports = config;

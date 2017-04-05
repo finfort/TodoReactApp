@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-// import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 import API_URL from '../../config';
 
+// TODO допилить сброс пароля по action open modal window
+// set password when create new user
 
 const cellEditProp = {
     mode: 'click',
+    clickToSelect: true,
     blurToSave: true,
     afterSaveCell: onAfterSaveCell
-
 };
 
 const options = {
@@ -38,7 +39,7 @@ function handleDeletedRow(rowKeys) {
 }
 
 function handleInsertedRow(row) {
-    console.log(row);
+    // console.log(row);
     axios.post(`${API_URL}/admin/users`, {
         _id: row._id,
         email: row.email,
@@ -62,16 +63,12 @@ function onAfterSaveCell(row, cellName, cellValue) {
         fio: row.fio,
         isActivated: row.isActivated,
         role: row.role
-    }) //es6 String Substitution
-        .then(response => {
-            console.log("/admin/users state");
-
-        })
-        .catch((err) => {
-            console.log("/admin/users Err");
-            console.log(err);
-
-        });
+    }).then(response => {
+        console.log("/admin/users save success", response);
+    }).catch((err) => {
+        console.log("/admin/users onAfterSaveCell Err");
+        console.log(err);
+    });
 
 }
 
@@ -124,20 +121,18 @@ class Users extends Component {
                 insertRow={true} hover selectRow={selectRow}
                 deleteRow search searchPlaceholder='Поиск...' multiColumnSearch
                 options={options}>
-                <TableHeaderColumn dataField='_id' isKey width="10%"  autoValue hiddenOnInsert hidden
+                <TableHeaderColumn dataField='_id' isKey width="10%" autoValue hiddenOnInsert hidden
                 >ID</TableHeaderColumn>
-                {/*hidden hiddenOnInsert autoValue*/}
                 <TableHeaderColumn dataField='email' editable={{ validator: emailValidator }} dataAlign='center' width="30%"
                 >Email</TableHeaderColumn>
                 <TableHeaderColumn dataField='fio' editable={{ validator: NameValidator }} dataAlign='center' width="30%"
                 >ФИО</TableHeaderColumn>
-                <TableHeaderColumn dataField='role'editable={{ type: 'select', options: { values: rolesTypes } }}   dataAlign='center' width="20%"
+                <TableHeaderColumn dataField='role' editable={{ type: 'select', options: { values: rolesTypes } }} dataAlign='center' width="20%"
                 >Права</TableHeaderColumn>
-                <TableHeaderColumn dataField='isActivated' editable={{ type: 'checkbox', options: { values: 'ДА:НЕТ' } }}  dataAlign='center'  width="20%"
+                <TableHeaderColumn dataField='isActivated' editable={{ type: 'checkbox' }} dataAlign='center' width="20%"
                 >Активирован</TableHeaderColumn>
             </BootstrapTable>
         );
-
     }
 }
 

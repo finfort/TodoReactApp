@@ -21,10 +21,9 @@ exports.createUser = function (req, res, next) {
 
     }, function (err, user) {
         // debugger;
-        console.log(err);
-        // if (err) return next(new Error('Could not find User'));
-        console.log("db row created");
-        console.log(user);
+        if (err) return next(new Error('Could not create User'+ err));
+        console.log("db row created" );
+        // console.log(user);
     });
 
 };
@@ -47,15 +46,10 @@ exports.updateUser = function (req, res, next) {
 };
 
 exports.deleteUsers = function (req, res, next) {
-    console.log(req.body);
-    debugger;
-    // User.remove({ where: { _id: req.body._id } });
-    let user = req.body._id;
-    User.remove(function (err, user) {
-        if (err) return next(new Error('error ', err));
-        User.findById(user._id, function (err, user) {
-            console.log(user);
-        });
+    // console.log(req.body);
+    User.remove({ _id: req.body._id }, function (err) {
+        if (err) return console.log(err);
+        console.log("removed!" +  req.body._id );
     });
-    
+
 };
