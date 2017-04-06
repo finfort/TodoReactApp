@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-// import { composeWithDevTools } from 'remote-redux-devtools';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -12,10 +11,7 @@ import App from './components/app';
 import HomePage from './components/homePage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
-// import Resources from './components/resources';
-// import TodoComponent from './components/TodoComponent';
 import Users from './components/admin/users';
-import UserSearch from './components/admin/user-search';
 
 import Mine from './components/Mine';
 import NotFound from './components/not-found';
@@ -60,7 +56,7 @@ ReactDOM.render(
         {/*<Route path="/admin" component={App}>*/}
         <Route path="admin/users" component={Users} />
         <Route path="/admin" component={App}>
-          <Route path="users1" component={UserSearch} />
+          {/*<Route path="users1" component={UserSearch} />*/}
           {/*<Route path="users/:id" component={UserDetails} />*/}
           <Route path="*" component={NotFound} />
         </Route>

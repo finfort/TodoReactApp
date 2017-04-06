@@ -1,12 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
-// const autoIncrement = require('mongoose-auto-increment');
 
 const Schema = mongoose.Schema;
 
-// const conn = mongoose.connect('mongodb://localhost/auth');
-
-// autoIncrement.initialize(conn);
 
 const userSchema = new Schema({
     email: { type: String, unique: true, lowercase: true },
@@ -38,7 +34,6 @@ userSchema.methods.comparePasswords = function (candidatePassword, callback) {
     });
 };
 
-// userSchema.plugin(autoIncrement.plugin, 'user');
 const ModelClass = mongoose.model('user', userSchema);
 
 module.exports = ModelClass;

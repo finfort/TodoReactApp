@@ -39,13 +39,14 @@ function handleDeletedRow(rowKeys) {
 }
 
 function handleInsertedRow(row) {
-    // console.log(row);
+    console.log(row);
     axios.post(`${API_URL}/admin/users`, {
         _id: row._id,
         email: row.email,
         fio: row.fio,
         isActivated: row.isActivated,
-        role: row.role
+        role: row.role,
+        password: row.password
     }).then(response => {
         console.log("/admin/users post", response);
     }).catch((err) => {
@@ -55,6 +56,9 @@ function handleInsertedRow(row) {
 }
 
 function onAfterSaveCell(row, cellName, cellValue) {
+    // run it only when row is dirty how to do it?
+    // check value in beforesave cell
+
     // console.log(row.fio);
     // put row to db
     axios.put(`${API_URL}/admin/users`, {
@@ -131,6 +135,8 @@ class Users extends Component {
                 >Права</TableHeaderColumn>
                 <TableHeaderColumn dataField='isActivated' editable={{ type: 'checkbox' }} dataAlign='center' width="20%"
                 >Активирован</TableHeaderColumn>
+                <TableHeaderColumn dataField='password' editable={{ type: 'password' }} hidden dataAlign='center' width="20%"
+                >Пароль</TableHeaderColumn>
             </BootstrapTable>
         );
     }

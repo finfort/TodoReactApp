@@ -17,7 +17,8 @@ exports.createUser = function (req, res, next) {
         email: req.body.email,
         fio: req.body.fio,
         role: req.body.role,
-        isActivated: req.body.isActivated
+        isActivated: req.body.isActivated,
+        password: req.body.password
 
     }, function (err, user) {
         // debugger;

@@ -48,5 +48,16 @@ exports.signup = function (req, res, next) {
 exports.signin = function (req, res, next) {
     //user has already had their email and password authorized
     //give them their token
-    res.send({ token: tokenForUser(req.user) });
+    User.findOne({ email: req.body.email }, function (err, existingUser) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        if (existingUser && existingUser.isActivated) {
+            //SUCCESS
+            res.send({ token: tokenForUser(req.user) });
+        }
+        //else not activated
+    });
+
 };
